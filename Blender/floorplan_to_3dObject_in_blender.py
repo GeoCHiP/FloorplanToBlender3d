@@ -3,6 +3,7 @@ import numpy as np
 import json
 import sys
 import math
+import os
 
 '''
 Floorplan to Blender
@@ -162,35 +163,36 @@ def main(argv):
     Save to file
     TODO add several save modes here!
     '''
-    bpy.ops.wm.save_as_mainfile(filepath=program_path + "/Target" +"/floorplan.blend")
-   
 
+    filepath = program_path + os.path.sep + 'Target' + os.path.sep + 'floorplan'
+    bpy.ops.export_scene.gltf(export_format='GLTF_EMBEDDED', filepath=f'{filepath}.gltf')
+    bpy.ops.wm.save_as_mainfile(filepath=f'{filepath}.blend')
+   
     '''
     Send correct exit code
     '''
     exit(0)
 
-
 def create_floorplan(base_path,program_path, name=0):
 
     parent, parent_mesh = init_object("Floorplan"+str(name))
-    
-    #base_path = base_path.replace('/','\\')
 
-    path_to_wall_faces_file = program_path +"/" + base_path + "wall_faces"
-    path_to_wall_verts_file = program_path +"/" + base_path + "wall_verts"
+    data_path = program_path + os.path.sep + base_path
 
-    path_to_floor_faces_file = program_path +"/" +base_path + "floor_faces"
-    path_to_floor_verts_file = program_path +"/" +base_path + "floor_verts"
+    path_to_wall_faces_file = data_path + "wall_faces"
+    path_to_wall_verts_file = data_path + "wall_verts"
 
-    path_to_rooms_faces_file = program_path +"/" + base_path + "rooms_faces"
-    path_to_rooms_verts_file = program_path +"/" + base_path + "rooms_verts"
+    path_to_floor_faces_file = data_path + "floor_faces"
+    path_to_floor_verts_file = data_path + "floor_verts"
+
+    path_to_rooms_faces_file = data_path + "rooms_faces"
+    path_to_rooms_verts_file = data_path + "rooms_verts"
 
 # TODO add window, doors here!
 #    path_to_windows_faces_file = program_path +"\\" + base_path + "windows_faces"
 #    path_to_windows_verts_file = program_path +"\\" + base_path + "windows_verts"
 
-    path_to_transform_file = program_path+"/" + base_path + "transform"
+    path_to_transform_file = program_path + os.path.sep + base_path + "transform"
 
     '''
     Get transform

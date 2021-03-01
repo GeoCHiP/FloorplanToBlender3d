@@ -87,7 +87,8 @@ def create_new_floorplan_path(path):
     @Param path, path to floorplan
     @Return end path
     '''
-    res = 0;
+    res = 0
+    path = 'Data' + os.path.sep
     for root, dirs, files in os.walk(path):
         for dir in dirs:
             try:
@@ -96,13 +97,12 @@ def create_new_floorplan_path(path):
             except:
                 continue
 
-    res = path + str(res) + "/"
-
+    res = path + str(res) + os.path.sep
     # create dir
     if not os.path.exists(res):
         os.makedirs(res)
 
-    return res;
+    return res
 
 
 def get_current_path():
