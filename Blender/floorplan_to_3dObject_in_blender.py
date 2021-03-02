@@ -120,7 +120,7 @@ def create_custom_mesh(objname, verts, faces, pos = None, rot = None, mat = None
     
     # add material
     if mat is None: # add random color
-        myobject.data.materials.append(create_mat( np.random.randint(0, 40, size=4))) #add the material to the object
+        myobject.data.materials.append(create_mat(np.array([0.2, 0.3, 0.8, 1]))) #add the material to the object
     else:
         myobject.data.materials.append(mat) #add the material to the object
     return myobject
