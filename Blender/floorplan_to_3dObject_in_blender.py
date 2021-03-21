@@ -149,15 +149,14 @@ def main(argv):
 
     if(len(argv) > 6): # Note YOU need 7 arguments!
         program_path = argv[5]
-
+        output_path = argv[6]
     else:
         exit(0)
-
 
     '''
     Instantiate
     '''
-    for i in range(6,len(argv)):
+    for i in range(7, len(argv)):
         base_path = argv[i]
         create_floorplan(base_path, program_path, i)
 
@@ -183,10 +182,10 @@ def main(argv):
     ctx['selected_editable_objects'] = obs
     bpy.ops.object.join(ctx)
 
-    filepath = program_path + os.path.sep + 'Target' + os.path.sep + 'floorplan'
+    filepath = output_path + os.path.sep + 'floorplan'
     bpy.ops.export_scene.gltf(export_format='GLTF_EMBEDDED', filepath=f'{filepath}.gltf')
     bpy.ops.wm.save_as_mainfile(filepath=f'{filepath}.blend')
-   
+
     '''
     Send correct exit code
     '''

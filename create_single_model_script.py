@@ -7,9 +7,12 @@ from FloorplanToBlenderLib import IO, execution
 
 if __name__ == '__main__':
     # Set required default paths
-    default_image_path, default_blender_install_path, default_file_structure, default_mode = IO.config_get_default()
+    default_output_path, default_image_path, default_blender_install_path, default_file_structure, default_mode = IO.config_get_default()
 
     parser = argparse.ArgumentParser(description='Create a 3d model from an image at the provided path')
+
+    parser.add_argument('-o', '--output-folder', default=default_output_path,
+                        help='Name of the folder to put output in. Default value is taken from config.ini.')
 
     parser.add_argument('-i', '--image-path', default=default_image_path,
                         help='Path to the image from which a 3d model will be created. Default value is taken from config.ini.')
@@ -33,6 +36,11 @@ if __name__ == '__main__':
 
     data_path = execution.simple_single(args.image_path)
 
+    if not os.path.exists(args.output_folder):
+        os.mkdir(args.output_folder)
+
+    output_path = program_path + os.path.sep + args.output_folder
+
     # Create blender project
     check_output([
         args.blender_install_path,
@@ -41,7 +49,8 @@ if __name__ == '__main__':
         '--python',
         blender_script_path,
         program_path, # Send this as parameter to script
+        output_path,
         data_path,
     ])
 
-    print('\nFiles created at: ' + program_path + os.path.sep + 'Target')
+    print('\nFiles created at:', output_path)

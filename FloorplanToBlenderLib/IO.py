@@ -18,10 +18,13 @@ def generate_config_file():
     Generate new config file, if no exist
     '''
     config = configparser.ConfigParser()
-    config['DEFAULT'] = {'image_path': 'Examples/example.png',
-    'blender_installation_path': 'C:\\Program Files\\Blender Foundation\\Blender\\blender.exe',
-    'file_structure': '[[[0,0,0], [0,0,0], [0,0,0]], [[0,0,0], [0,0,0], [0,0,0]], [[0,0,0], [0,0,0], [0,0,0]]]',
-    'mode': 'simple'}
+    config['DEFAULT'] = {
+        'output_folder': 'Target',
+        'image_path': r'Examples\example.png',
+        'blender_installation_path': r'C:\Program Files\Blender Foundation\Blender\blender.exe',
+        'file_structure': '[[[0,0,0], [0,0,0], [0,0,0]], [[0,0,0], [0,0,0], [0,0,0]], [[0,0,0], [0,0,0], [0,0,0]]]',
+        'mode': 'simple',
+    }
     with open('config.ini', 'w') as configfile:
         config.write(configfile)
 
@@ -43,7 +46,11 @@ def config_get_default():
     if not config_file_exist('config.ini'):
         generate_config_file()
     config.read('config.ini')
-    return config['DEFAULT']['image_path'], config['DEFAULT']['blender_installation_path'], config['DEFAULT']['file_structure'], config['DEFAULT']['mode']
+    return (config['DEFAULT']['output_folder'],
+            config['DEFAULT']['image_path'],
+            config['DEFAULT']['blender_installation_path'],
+            config['DEFAULT']['file_structure'],
+            config['DEFAULT']['mode'])
 
 def save_to_file(file_path, data):
     '''
