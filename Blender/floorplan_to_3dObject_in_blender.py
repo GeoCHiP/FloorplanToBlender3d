@@ -140,10 +140,12 @@ def main(argv):
     Therefore we split data into two files
     '''
 
-    # Remove starting object cube
+    # Remove starting objects
     # Select all
     objs = bpy.data.objects
     objs.remove(objs["Cube"], do_unlink=True)
+    objs.remove(objs['Camera'], do_unlink=True)
+    objs.remove(objs['Light'], do_unlink=True)
 
     if(len(argv) > 6): # Note YOU need 7 arguments!
         program_path = argv[5]
@@ -163,6 +165,23 @@ def main(argv):
     Save to file
     TODO add several save modes here!
     '''
+
+    # Join all the parts of the 3d-model in one mesh
+
+    scene = bpy.context.scene
+
+    obs = []
+    for ob in scene.objects:
+        if ob.type == 'MESH':
+            obs.append(ob)
+
+    ctx = bpy.context.copy()
+
+    # one of the objects to join
+    ctx['active_object'] = obs[0]
+
+    ctx['selected_editable_objects'] = obs
+    bpy.ops.object.join(ctx)
 
     filepath = program_path + os.path.sep + 'Target' + os.path.sep + 'floorplan'
     bpy.ops.export_scene.gltf(export_format='GLTF_EMBEDDED', filepath=f'{filepath}.gltf')
