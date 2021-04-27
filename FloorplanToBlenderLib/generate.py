@@ -1,5 +1,6 @@
 """
 Generate
+
 This file contains code for generate data files, used when creating blender project.
 A temp storage of calculated data and a way to transfer data to the blender script.
 
@@ -8,9 +9,12 @@ Copyright (C) 2019 Daniel Westberg
 """
 
 
-import numpy as np
-import cv2
+
 import os
+import logging
+
+import numpy
+import cv2
 
 
 from . import detect
@@ -26,25 +30,21 @@ path = "data/"
 def generate_all_files(imgpath: str, info: bool,
                        position: list[float] = None,
                        rotation: list[float] = None) -> tuple[str, list]:
-    """Generate all data files.
+    """ Generate all data files.
 
-    Parameters
-    ----------
-    imgpath: str
+    @param imgpath
         Path to the image.
 
-    info: bool
+    @param info
         Verbose info should be printed.
 
-    position: list[float]
+    @param position
         #TODO
 
-    rotation: list[float]
+    @param rotation
         #TODO
 
-    Returns
-    -------
-    tuple[str, list]
+    @return
         Path to the generated files, shape.
     """
     global path
@@ -58,39 +58,46 @@ def generate_all_files(imgpath: str, info: bool,
     new_shape = generate_rooms_file(imgpath, info)
     shape = validate_shape(shape, new_shape)
 
-    #verts, height = generate_big_windows_file(imgpath, info)
-    #verts, height = generate_small_windows_file(imgpath, info)
-    #verts, height = generate_doors_file(imgpath, info)
-
     transform = generate_transform_file(imgpath, info, position, rotation, shape)
 
     return path, shape
 
-def validate_shape(old_shape, new_shape):
-    '''
-    Validate shape, use this to calculate a objects total shape
-    @Param old_shape
-    @Param new_shape
-    @Return total shape
-    '''
+
+def validate_shape(old_shape: list[float, float, float], new_shape: list[float, float, float]) -> list[float, float, float]:
+    """ Validate shape, use this to calculate an objects total shape.
+
+    @param old_shape
+
+    @param new_shape
+
+    @return total shape
+    """
     shape = [0,0,0]
     shape[0] = max(old_shape[0], new_shape[0])
     shape[1] = max(old_shape[1], new_shape[1])
     shape[2] = max(old_shape[2], new_shape[2])
     return shape
 
-def get_shape(verts, scale):
-    '''
-    Get shape
-    Rescale boxes to specified scale
-    @Param verts, input boxes
-    @Param scale to use
-    @Return rescaled boxes
-    '''
+#TODO
+def get_shape(verts: list[numpy.ndarray], scale: float) -> list[float, float, float]:
+    """ Rescale boxes to specified scale.
+
+    @param verts
+        Input boxes.
+
+    @param
+        Scale to use.
+
+    @return
+        Rescaled boxes.
+    """
     if len(verts) == 0:
         return [0,0,0]
 
-    posList = transform.verts_to_poslist(verts)
+    if isinstance(verts, list):
+        posList = transform.verts_to_poslist(verts)
+    elif isinstance(verts, numpy.ndarray) and verts.shape[-1] == 3 and verts.ndim == 2:
+        posList = verts
     high = [0,0,0]
     low = posList[0]
 
@@ -108,7 +115,8 @@ def get_shape(verts, scale):
         if pos[2] < low[2]:
             low[2] = pos[2]
 
-    return [high[0] - low[0],high[1] - low[1],high[2] - low[2]]
+    return [high[0] - low[0], high[1] - low[1], high[2] - low[2]]
+
 
 def generate_transform_file(imgpath, info, position, rotation, shape):
     '''
@@ -138,32 +146,34 @@ def generate_transform_file(imgpath, info, position, rotation, shape):
     else:
         transform["shape"] = shape
 
-    IO.save_to_file(path+"transform", transform)
+    IO.save_to_file(os.path.join(path, 'transform'), transform)
 
     return transform
 
-def generate_rooms_file(img_path, info):
-    '''
-    Generate room data files
-    @Param img_path path to image
-    @Param info, boolean if should be printed
-    @Return shape
-    '''
-    # Read floorplan image
+
+def generate_rooms_file(img_path: str, info: bool) -> list[float, float, float]:
+    """ Generate room data files.
+    
+    @param img_path
+        Path to an image.
+    
+    @param info
+        Verbose info should be printed.
+    
+    @return
+        Shape.
+    """
     img = cv2.imread(img_path)
 
-    # grayscale image
     gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 
-    # create verts (points 3d), points to use in mesh creations
     verts = []
-    # create faces for each plane, describe order to create mesh points
     faces = []
 
-    # Height of waLL
+    # Height of walls
     height = 0.999
 
-    # Scale pixel value to 3d pos
+    # Scale pixel value to 3D pos
     scale = 100
 
     gray = detect.wall_filter(gray)
@@ -175,13 +185,13 @@ def generate_rooms_file(img_path, info):
     gray_rooms =  cv2.cvtColor(colored_rooms,cv2.COLOR_BGR2GRAY)
 
     # get box positions for rooms
-    boxes, gray_rooms = detect.detect_precise_boxes(gray_rooms, gray_rooms)
+    contours, gray_rooms = detect.detect_precise_boxes(gray_rooms, gray_rooms)
 
     #Create verts
     room_count = 0
-    for box in boxes:
-        verts.extend([transform.scale_point_to_vector(box, scale, height)])
-        room_count+= 1
+    for cnt in contours:
+        verts.extend([transform.scale_point_to_vector(cnt, scale, height)])
+        room_count += 1
 
     # create faces
     for room in verts:
@@ -193,12 +203,13 @@ def generate_rooms_file(img_path, info):
         faces.append([(temp)])
 
     if(info):
-        print("Number of rooms detected : ", room_count)
+        logging.info('Number of rooms detected: %s', room_count)
 
-    IO.save_to_file(path+"rooms_verts", verts)
-    IO.save_to_file(path+"rooms_faces", faces)
+    IO.save_to_file(os.path.join(path, 'rooms_verts'), verts)
+    IO.save_to_file(os.path.join(path, 'rooms_faces'), faces)
 
     return get_shape(verts, scale)
+
 
 def generate_small_windows_file(img_path, info):
     '''
@@ -270,13 +281,13 @@ def generate_small_windows_file(img_path, info):
 
     return get_shape(verts, scale)
 
+
 def generate_doors_file(img_path, info):
-    '''
-    Generate door data file
-    @Param img_path
-    @Param info, boolean if should be print
-    @Return shape
-    '''
+    """
+    Generate door data file.
+    @param img_path something is going on
+    @param info     boolean if should be print
+    """
     # Read floorplan image
     img = cv2.imread(img_path)
 
@@ -328,32 +339,29 @@ def generate_doors_file(img_path, info):
 
     return get_shape(verts, scale)
 
-def generate_floor_file(img_path: str, info: bool) -> list:
-    """Generate a floor data file.
 
-    Parameters
-    ----------
-    img_path: str
+def generate_floor_file(img_path: str, info: bool) -> list[float, float, float]:
+    """ Generate a floor data file.
+
+    @param img_path
         Path to an image.
 
-    info: bool
+    @param info
         Verbose info should be printed.
 
-    Returns
-    -------
-    list
-        #TODO
+    @return
+        Shape.
     """
     img = cv2.imread(img_path)
     
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    # detect outer Contours (simple floor or roof solution)
-    contour, img = detect.detect_outer_contours(gray)
+    # Detect outer contour (simple floor or roof solution)
+    contour, img = detect.detect_outer_contour(gray)
 
-    # create verts (3D points), points to use in mesh creations
+    # Create verts (3D points), points to use in mesh creations
     verts = []
-    # create faces for each plane, describe order to create mesh points
+    # Create faces for each plane, describe order to create mesh points
     faces = []
 
     # Height of a wall
@@ -362,10 +370,10 @@ def generate_floor_file(img_path: str, info: bool) -> list:
     # Scale a pixel value to 3D pos
     scale = 100
 
-    #Create verts
+    # Create verts
     verts = transform.scale_point_to_vector(contour, scale, height)
 
-    # create faces
+    # Create faces
     count = 0
     for box in verts:
         faces.extend([(count)])
@@ -376,13 +384,19 @@ def generate_floor_file(img_path: str, info: bool) -> list:
 
     return get_shape(verts, scale)
 
-def generate_walls_file(img_path, info):
-    '''
-    Generate wall data file for floorplan
-    @Param img_path, path to input file
-    @Param info, boolean if data should be printed
-    @Return shape
-    '''
+
+def generate_walls_file(img_path: str, info: bool) -> list[float, float, float]:
+    """ Generate wall data file for floorplan.
+    
+    @param img_path
+        Path to input file.
+
+    @param info
+        Verbose info should be printed.
+    
+    @return
+        Shape.
+    """
     # Read floorplan image
     img = cv2.imread(img_path)
 
@@ -409,11 +423,11 @@ def generate_walls_file(img_path, info):
     # Convert boxes to verts and faces
     verts, faces, wall_amount = transform.create_nx4_verts_and_faces(boxes, wall_height, scale)
 
-    if(info):
-        print("Walls created : ", wall_amount)
+    if info:
+        logging.info('Walls created: %d', wall_amount)
 
     # One solution to get data to blender is to write and read from file.
-    IO.save_to_file(path+"wall_verts", verts)
-    IO.save_to_file(path+"wall_faces", faces)
+    IO.save_to_file(os.path.join(path + 'wall_verts'), verts)
+    IO.save_to_file(os.path.join(path + 'wall_faces'), faces)
 
     return get_shape(verts, scale)

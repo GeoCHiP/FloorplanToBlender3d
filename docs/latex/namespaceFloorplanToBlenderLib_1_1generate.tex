@@ -1,0 +1,199 @@
+\hypertarget{namespaceFloorplanToBlenderLib_1_1generate}{}\doxysection{Floorplan\+To\+Blender\+Lib.\+generate Namespace Reference}
+\label{namespaceFloorplanToBlenderLib_1_1generate}\index{FloorplanToBlenderLib.generate@{FloorplanToBlenderLib.generate}}
+
+
+Generate.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+tuple\mbox{[}str, list\mbox{]} \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1generate_a9d50a493209a644bf2080b42c5b7906f}{generate\+\_\+all\+\_\+files}} (str imgpath, bool info, list\mbox{[}float\mbox{]} position=None, list\mbox{[}float\mbox{]} rotation=None)
+\begin{DoxyCompactList}\small\item\em Generate all data files. \end{DoxyCompactList}\item 
+list\mbox{[}float, float, float\mbox{]} \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1generate_a9067efc8dfe736d49da6cd1963d8e219}{validate\+\_\+shape}} (list\mbox{[}float, float, float\mbox{]} old\+\_\+shape, list\mbox{[}float, float, float\mbox{]} new\+\_\+shape)
+\begin{DoxyCompactList}\small\item\em Validate shape, use this to calculate an objects total shape. \end{DoxyCompactList}\item 
+list\mbox{[}float, float, float\mbox{]} \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1generate_a7179ea9e2b722830e1f6d052814e7751}{get\+\_\+shape}} (list\mbox{[}numpy.\+ndarray\mbox{]} verts, float scale)
+\begin{DoxyCompactList}\small\item\em Rescale boxes to specified scale. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1generate_acf87ea5262dda1ee55727c9b2d552076}{generate\+\_\+transform\+\_\+file}} (imgpath, info, position, rotation, shape)
+\begin{DoxyCompactList}\small\item\em Generate transform of file A transform contains information about an objects position, rotation. \end{DoxyCompactList}\item 
+list\mbox{[}float, float, float\mbox{]} \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1generate_acf14559f02b7f50acc70e5db1b709249}{generate\+\_\+rooms\+\_\+file}} (str img\+\_\+path, bool info)
+\begin{DoxyCompactList}\small\item\em Generate room data files. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1generate_acdf4737361eb70c304e5e99997593154}\label{namespaceFloorplanToBlenderLib_1_1generate_acdf4737361eb70c304e5e99997593154}} 
+def \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1generate_acdf4737361eb70c304e5e99997593154}{generate\+\_\+small\+\_\+windows\+\_\+file}} (img\+\_\+path, info)
+\begin{DoxyCompactList}\small\item\em Generate small windows data file @\+Param img\+\_\+path, path to image @\+Param info, boolean if should be printed @\+Return shape. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1generate_a298464664be2bf45ba3cfe4e098e86ae}{generate\+\_\+doors\+\_\+file}} (img\+\_\+path, info)
+\begin{DoxyCompactList}\small\item\em Generate door data file. \end{DoxyCompactList}\item 
+list\mbox{[}float, float, float\mbox{]} \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1generate_aa2eff040e51f511579ffb32190c3f795}{generate\+\_\+floor\+\_\+file}} (str img\+\_\+path, bool info)
+\begin{DoxyCompactList}\small\item\em Generate a floor data file. \end{DoxyCompactList}\item 
+list\mbox{[}float, float, float\mbox{]} \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1generate_aa1473257379e20bea270a2a82c858e2c}{generate\+\_\+walls\+\_\+file}} (str img\+\_\+path, bool info)
+\begin{DoxyCompactList}\small\item\em Generate wall data file for floorplan. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1generate_a85003beed2c7d1c7fac9659b87781421}\label{namespaceFloorplanToBlenderLib_1_1generate_a85003beed2c7d1c7fac9659b87781421}} 
+string {\bfseries base\+\_\+path} = \char`\"{}data/\char`\"{}
+\item 
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1generate_a236438ef3a8e49109f333cd69f45af51}\label{namespaceFloorplanToBlenderLib_1_1generate_a236438ef3a8e49109f333cd69f45af51}} 
+string {\bfseries path} = \char`\"{}data/\char`\"{}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Generate. 
+
+This file contains code for generate data files, used when creating blender project. A temp storage of calculated data and a way to transfer data to the blender script.
+
+Floorplan\+To\+Blender3d Copyright (C) 2019 Daniel Westberg 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1generate_a9d50a493209a644bf2080b42c5b7906f}\label{namespaceFloorplanToBlenderLib_1_1generate_a9d50a493209a644bf2080b42c5b7906f}} 
+\index{FloorplanToBlenderLib.generate@{FloorplanToBlenderLib.generate}!generate\_all\_files@{generate\_all\_files}}
+\index{generate\_all\_files@{generate\_all\_files}!FloorplanToBlenderLib.generate@{FloorplanToBlenderLib.generate}}
+\doxysubsubsection{\texorpdfstring{generate\_all\_files()}{generate\_all\_files()}}
+{\footnotesize\ttfamily  tuple\mbox{[}str, list\mbox{]} Floorplan\+To\+Blender\+Lib.\+generate.\+generate\+\_\+all\+\_\+files (\begin{DoxyParamCaption}\item[{str}]{imgpath,  }\item[{bool}]{info,  }\item[{list\mbox{[}float\mbox{]} }]{position = {\ttfamily None},  }\item[{list\mbox{[}float\mbox{]} }]{rotation = {\ttfamily None} }\end{DoxyParamCaption})}
+
+
+
+Generate all data files. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em imgpath} & Path to the image.\\
+\hline
+{\em info} & Verbose info should be printed.\\
+\hline
+{\em position} & \#\+TODO\\
+\hline
+{\em rotation} & \#\+TODO\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Path to the generated files, shape. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1generate_a298464664be2bf45ba3cfe4e098e86ae}\label{namespaceFloorplanToBlenderLib_1_1generate_a298464664be2bf45ba3cfe4e098e86ae}} 
+\index{FloorplanToBlenderLib.generate@{FloorplanToBlenderLib.generate}!generate\_doors\_file@{generate\_doors\_file}}
+\index{generate\_doors\_file@{generate\_doors\_file}!FloorplanToBlenderLib.generate@{FloorplanToBlenderLib.generate}}
+\doxysubsubsection{\texorpdfstring{generate\_doors\_file()}{generate\_doors\_file()}}
+{\footnotesize\ttfamily def Floorplan\+To\+Blender\+Lib.\+generate.\+generate\+\_\+doors\+\_\+file (\begin{DoxyParamCaption}\item[{}]{img\+\_\+path,  }\item[{}]{info }\end{DoxyParamCaption})}
+
+
+
+Generate door data file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em img\+\_\+path} & something is going on \\
+\hline
+{\em info} & boolean if should be print \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1generate_aa2eff040e51f511579ffb32190c3f795}\label{namespaceFloorplanToBlenderLib_1_1generate_aa2eff040e51f511579ffb32190c3f795}} 
+\index{FloorplanToBlenderLib.generate@{FloorplanToBlenderLib.generate}!generate\_floor\_file@{generate\_floor\_file}}
+\index{generate\_floor\_file@{generate\_floor\_file}!FloorplanToBlenderLib.generate@{FloorplanToBlenderLib.generate}}
+\doxysubsubsection{\texorpdfstring{generate\_floor\_file()}{generate\_floor\_file()}}
+{\footnotesize\ttfamily  list\mbox{[}float, float, float\mbox{]} Floorplan\+To\+Blender\+Lib.\+generate.\+generate\+\_\+floor\+\_\+file (\begin{DoxyParamCaption}\item[{str}]{img\+\_\+path,  }\item[{bool}]{info }\end{DoxyParamCaption})}
+
+
+
+Generate a floor data file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em img\+\_\+path} & Path to an image.\\
+\hline
+{\em info} & Verbose info should be printed.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Shape. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1generate_acf14559f02b7f50acc70e5db1b709249}\label{namespaceFloorplanToBlenderLib_1_1generate_acf14559f02b7f50acc70e5db1b709249}} 
+\index{FloorplanToBlenderLib.generate@{FloorplanToBlenderLib.generate}!generate\_rooms\_file@{generate\_rooms\_file}}
+\index{generate\_rooms\_file@{generate\_rooms\_file}!FloorplanToBlenderLib.generate@{FloorplanToBlenderLib.generate}}
+\doxysubsubsection{\texorpdfstring{generate\_rooms\_file()}{generate\_rooms\_file()}}
+{\footnotesize\ttfamily  list\mbox{[}float, float, float\mbox{]} Floorplan\+To\+Blender\+Lib.\+generate.\+generate\+\_\+rooms\+\_\+file (\begin{DoxyParamCaption}\item[{str}]{img\+\_\+path,  }\item[{bool}]{info }\end{DoxyParamCaption})}
+
+
+
+Generate room data files. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em img\+\_\+path} & Path to an image.\\
+\hline
+{\em info} & Verbose info should be printed.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Shape. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1generate_acf87ea5262dda1ee55727c9b2d552076}\label{namespaceFloorplanToBlenderLib_1_1generate_acf87ea5262dda1ee55727c9b2d552076}} 
+\index{FloorplanToBlenderLib.generate@{FloorplanToBlenderLib.generate}!generate\_transform\_file@{generate\_transform\_file}}
+\index{generate\_transform\_file@{generate\_transform\_file}!FloorplanToBlenderLib.generate@{FloorplanToBlenderLib.generate}}
+\doxysubsubsection{\texorpdfstring{generate\_transform\_file()}{generate\_transform\_file()}}
+{\footnotesize\ttfamily def Floorplan\+To\+Blender\+Lib.\+generate.\+generate\+\_\+transform\+\_\+file (\begin{DoxyParamCaption}\item[{}]{imgpath,  }\item[{}]{info,  }\item[{}]{position,  }\item[{}]{rotation,  }\item[{}]{shape }\end{DoxyParamCaption})}
+
+
+
+Generate transform of file A transform contains information about an objects position, rotation. 
+
+@\+Param imgpath @\+Param info, boolean if should be printed @\+Param position, position vector @\+Param rotation, rotation vector @\+Param shape @\+Return transform \mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1generate_aa1473257379e20bea270a2a82c858e2c}\label{namespaceFloorplanToBlenderLib_1_1generate_aa1473257379e20bea270a2a82c858e2c}} 
+\index{FloorplanToBlenderLib.generate@{FloorplanToBlenderLib.generate}!generate\_walls\_file@{generate\_walls\_file}}
+\index{generate\_walls\_file@{generate\_walls\_file}!FloorplanToBlenderLib.generate@{FloorplanToBlenderLib.generate}}
+\doxysubsubsection{\texorpdfstring{generate\_walls\_file()}{generate\_walls\_file()}}
+{\footnotesize\ttfamily  list\mbox{[}float, float, float\mbox{]} Floorplan\+To\+Blender\+Lib.\+generate.\+generate\+\_\+walls\+\_\+file (\begin{DoxyParamCaption}\item[{str}]{img\+\_\+path,  }\item[{bool}]{info }\end{DoxyParamCaption})}
+
+
+
+Generate wall data file for floorplan. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em img\+\_\+path} & Path to input file.\\
+\hline
+{\em info} & Verbose info should be printed.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Shape. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1generate_a7179ea9e2b722830e1f6d052814e7751}\label{namespaceFloorplanToBlenderLib_1_1generate_a7179ea9e2b722830e1f6d052814e7751}} 
+\index{FloorplanToBlenderLib.generate@{FloorplanToBlenderLib.generate}!get\_shape@{get\_shape}}
+\index{get\_shape@{get\_shape}!FloorplanToBlenderLib.generate@{FloorplanToBlenderLib.generate}}
+\doxysubsubsection{\texorpdfstring{get\_shape()}{get\_shape()}}
+{\footnotesize\ttfamily  list\mbox{[}float, float, float\mbox{]} Floorplan\+To\+Blender\+Lib.\+generate.\+get\+\_\+shape (\begin{DoxyParamCaption}\item[{list\mbox{[}numpy.\+ndarray\mbox{]}}]{verts,  }\item[{float}]{scale }\end{DoxyParamCaption})}
+
+
+
+Rescale boxes to specified scale. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em verts} & Input boxes.\\
+\hline
+{\em Scale} & to use.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Rescaled boxes. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1generate_a9067efc8dfe736d49da6cd1963d8e219}\label{namespaceFloorplanToBlenderLib_1_1generate_a9067efc8dfe736d49da6cd1963d8e219}} 
+\index{FloorplanToBlenderLib.generate@{FloorplanToBlenderLib.generate}!validate\_shape@{validate\_shape}}
+\index{validate\_shape@{validate\_shape}!FloorplanToBlenderLib.generate@{FloorplanToBlenderLib.generate}}
+\doxysubsubsection{\texorpdfstring{validate\_shape()}{validate\_shape()}}
+{\footnotesize\ttfamily  list\mbox{[}float, float, float\mbox{]} Floorplan\+To\+Blender\+Lib.\+generate.\+validate\+\_\+shape (\begin{DoxyParamCaption}\item[{list\mbox{[}float, float, float\mbox{]}}]{old\+\_\+shape,  }\item[{list\mbox{[}float, float, float\mbox{]}}]{new\+\_\+shape }\end{DoxyParamCaption})}
+
+
+
+Validate shape, use this to calculate an objects total shape. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em old\+\_\+shape} & \\
+\hline
+{\em new\+\_\+shape} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+total shape 
+\end{DoxyReturn}

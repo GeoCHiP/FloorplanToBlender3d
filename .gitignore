@@ -119,6 +119,7 @@ dmypy.json
 # Ignore data files and blender files
 Target/
 Data/
+data/
 Floorplans/
 
 # Ignore jupyter

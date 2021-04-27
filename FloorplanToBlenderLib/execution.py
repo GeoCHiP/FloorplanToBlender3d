@@ -11,16 +11,12 @@ from . import generate
 
 
 def simple_single(image_path: str) -> str:
-    """Generate one simple floorplan.
+    """ Generate one simple floorplan.
 
-    Parameters
-    ----------
-    image_path: str
+    @param image_path
         Path to an image
 
-    Returns
-    -------
-    str
+    @return
         Path to the generated files
     """
     fpath, fshape = generate.generate_all_files(image_path, info=True)
@@ -28,19 +24,15 @@ def simple_single(image_path: str) -> str:
 
 
 def multiple_simple(image_paths: list, horizontal: bool = True) -> list:
-    """Generates several new apartments.
+    """ Generates several new apartments.
 
-    Parameters
-    ----------
-    image_paths: List[str]
+    @param image_paths
         List of paths to images.
 
-    horizontal: bool
+    @param horizontal
         True if apartments should stack horizontal, False if vertical.
 
-    Returns
-    -------
-    List[str]
+    @return
         Paths to image data.
     """
     data_paths = list()
@@ -65,16 +57,12 @@ def multiple_simple(image_paths: list, horizontal: bool = True) -> list:
 
 
 def multiple_coord(image_paths: list) -> list:
-    """Generates new apartments with fixed coordinates.
+    """ Generates new apartments with fixed coordinates.
 
-    Parameters
-    ----------
-    image_paths: List[Tuple[str, List[]]]
+    @param image_paths
         List of tuples containing [(img_path, pos), ...].
 
-    Returns
-    -------
-    List[str]
+    @return
         Paths to the image data.
     """
     data_paths = list()

@@ -1,15 +1,19 @@
-import numpy as np
-import cv2
-
-
-'''
+"""
 Transform
+
 This file contains functions for transforming data between different formats.
 
 FloorplanToBlender3d
 Copyright (C) 2019 Daniel Westberg
-'''
+"""
 
+
+import logging
+
+import numpy
+import cv2
+
+from itertools import chain
 
 def recursive_loop_element(thelist, res):
     '''
@@ -18,7 +22,7 @@ def recursive_loop_element(thelist, res):
     @Param thelist, incoming list
     @Param res, resulting list
     '''
-    if not thelist:
+    if len(thelist) == 0:
         return res
     else:
         if isinstance(thelist[0], int):
@@ -47,18 +51,28 @@ def verts_to_poslist(verts):
         i+= 3
     return res
 
-def scale_point_to_vector(boxes, scale = 1, height = 0):
-    '''
-    Scale point to vector
-    scales a point to a vector
-    @Param boxes
-    @Param scale
-    @Param height
-    '''
+def scale_point_to_vector(contour: numpy.ndarray, scale: float = 1, height: float = 0) -> numpy.ndarray:
+    """ Takes an array of 2D points and adds third dimension to them.
+
+    @param contour
+        numpy.ndarray of shape (n_points, 1, 2).
+
+    @param scale
+        Float value to scale every point by. 
+
+    @param height
+        Third z-dimension value.
+    
+    @return
+        numpy.ndarray of shape (n_points, 1, 3)
+    """
     res = []
-    for box in boxes:
-        for pos in box:
-            res.extend([(pos[0]/scale, pos[1]/scale, height)])
+    for point in contour:
+        for pos in point:
+            res.extend([numpy.concatenate([pos / scale, height * numpy.ones(1)])])
+            # res.extend([(pos[0]/scale, pos[1]/scale, height)])
+
+    res = numpy.array(res)
     return res
 
 
@@ -77,45 +91,50 @@ def write_verts_on_2d_image(boxes, blank_image):
     cv2.imshow('show image',blank_image)
     cv2.waitKey(0)
 
-def create_nx4_verts_and_faces(boxes, height = 1, scale = 1, ground = 0):
-    '''
-    Create verts and faces
-    @Param boxes,
-    @Param height,
-    @Param scale,
-    @Return verts - as [[wall1],[wall2],...] numpy array, faces - as array to use on all boxes, wall_amount - as integer
-    Use the result by looping over boxes in verts, and create mesh for each box with same face and pos
-    See create_custom_mesh in floorplan code
-    '''
+def create_nx4_verts_and_faces(contours, height = 1, scale = 1, ground = 0):
+    """ Create verts and faces.
+    
+    @param contours
+    
+    @param height
+    
+    @param scale
+    
+    @return verts
+        as [[wall1],[wall2],...] numpy array, faces - as array to use on all boxes, wall_amount - as integer
+    
+    Use the result by looping over boxes in verts, and create mesh for each box with same face and pos.
+    See create_custom_mesh in floorplan code.
+    """
     wall_counter = 0
     verts = []
 
-    for box in boxes:
-        box_verts = []
-        for index in range(0, len(box) ):
+    for cnt in contours:
+        cnt_verts = []
+        for index in range(0, len(cnt)):
             temp_verts = []
             # Get current
-            curr = box[index][0]
+            curr = cnt[index][0]
 
             # is last, link to first
-            if(len(box)-1 >= index+1):
-                next = box[index+1][0]
+            if(len(cnt)-1 >= index+1):
+                next = cnt[index+1][0]
             else:
-                next = box[0][0] # link to first pos
+                next = cnt[0][0] # link to first pos
 
-            # Create all 3d poses for each wall
+            # Create all 3D poses for each wall
             temp_verts.extend([(curr[0]/scale, curr[1]/scale, ground)])
             temp_verts.extend([(curr[0]/scale, curr[1]/scale, height)])
             temp_verts.extend([(next[0]/scale, next[1]/scale, ground)])
             temp_verts.extend([(next[0]/scale, next[1]/scale, height)])
 
             # add wall verts to verts
-            box_verts.extend([temp_verts])
+            cnt_verts.extend([temp_verts])
 
-            # wall counter
+            # wall counter | essensialy number of contours
             wall_counter += 1
 
-        verts.extend([box_verts])
+        verts.extend([cnt_verts])
 
     faces = [(0, 1, 3, 2)]
     return verts, faces, wall_counter

@@ -1,0 +1,149 @@
+\hypertarget{namespaceFloorplanToBlenderLib_1_1detect}{}\doxysection{Floorplan\+To\+Blender\+Lib.\+detect Namespace Reference}
+\label{namespaceFloorplanToBlenderLib_1_1detect}\index{FloorplanToBlenderLib.detect@{FloorplanToBlenderLib.detect}}
+
+
+Detect.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+numpy.\+ndarray \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1detect_aa78b392937a51e034f4cbe6d49c499b3}{wall\+\_\+filter}} (numpy.\+ndarray gray)
+\begin{DoxyCompactList}\small\item\em Filter out walls from a grayscale image. \end{DoxyCompactList}\item 
+tuple\mbox{[}list\mbox{[}numpy.\+ndarray\mbox{]}, numpy.\+ndarray\mbox{]} \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1detect_a616a5052927debbbc6fdc3bd53797de7}{detect\+\_\+precise\+\_\+boxes}} (numpy.\+ndarray detect\+\_\+img, numpy.\+ndarray output\+\_\+img=None, tuple\mbox{[}int, int, int\mbox{]} color=(100, 100, 0))
+\begin{DoxyCompactList}\small\item\em Detect corners with boxes in image with high precision. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1detect_a1f543f1ec1d838f53c9930a5a11f4cf1}\label{namespaceFloorplanToBlenderLib_1_1detect_a1f543f1ec1d838f53c9930a5a11f4cf1}} 
+def \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1detect_a1f543f1ec1d838f53c9930a5a11f4cf1}{remove\+\_\+noise}} (img, noise\+\_\+removal\+\_\+threshold)
+\begin{DoxyCompactList}\small\item\em Remove noise from image and return mask Help function for finding room @\+Param img @mandatory image to remove noise from @\+Param noise\+\_\+removal\+\_\+threshold @mandatory threshold for noise @\+Return return new mask of image. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1detect_a860f2f2fca8a06183222a30f0150a219}\label{namespaceFloorplanToBlenderLib_1_1detect_a860f2f2fca8a06183222a30f0150a219}} 
+def \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1detect_a860f2f2fca8a06183222a30f0150a219}{find\+\_\+corners\+\_\+and\+\_\+draw\+\_\+lines}} (img, corners\+\_\+threshold, room\+\_\+closing\+\_\+max\+\_\+length)
+\begin{DoxyCompactList}\small\item\em Finds corners and draw lines from them Help function for finding room @\+Param image input image @\+Param corners\+\_\+threshold threshold for corner distance @\+Param room\+\_\+closing\+\_\+max\+\_\+length threshold for room max size @\+Return output image. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1detect_a2aaccce71d0c74c18661e7b12f0dc878}\label{namespaceFloorplanToBlenderLib_1_1detect_a2aaccce71d0c74c18661e7b12f0dc878}} 
+def \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1detect_a2aaccce71d0c74c18661e7b12f0dc878}{mark\+\_\+outside\+\_\+black}} (img, mask)
+\begin{DoxyCompactList}\small\item\em Mark white background as black @\+Param @mandatory img image input @\+Param @mandatory mask mask to use @\+Return image, mask. \end{DoxyCompactList}\item 
+list \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1detect_aded08fbafe09cceeca0a319e59977ed1}{find\+\_\+rooms}} (numpy.\+ndarray img, int noise\+\_\+removal\+\_\+threshold=50, float corners\+\_\+threshold=0.\+01, int room\+\_\+closing\+\_\+max\+\_\+length=130, int gap\+\_\+in\+\_\+wall\+\_\+min\+\_\+threshold=5000)
+\begin{DoxyCompactList}\small\item\em I have copied and changed this function some... \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1detect_af0f413afb753857d0e4c2327947b24fe}\label{namespaceFloorplanToBlenderLib_1_1detect_af0f413afb753857d0e4c2327947b24fe}} 
+def \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1detect_af0f413afb753857d0e4c2327947b24fe}{detect\+And\+Remove\+Precise\+Boxes}} (detect\+\_\+img, output\+\_\+img=None, color=\mbox{[}255, 255, 255\mbox{]})
+\begin{DoxyCompactList}\small\item\em Remove contours of detected walls from image @\+Param detect\+\_\+img image to detect from @mandatory @\+Param output\+\_\+img image for output @\+Param color to set on output @\+Return list of boxes, actual image @source \href{https://stackoverflow.com/questions/50930033/drawing-lines-and-distance-to-them-on-image-opencv-python}{\texttt{ https\+://stackoverflow.\+com/questions/50930033/drawing-\/lines-\/and-\/distance-\/to-\/them-\/on-\/image-\/opencv-\/python}}. \end{DoxyCompactList}\item 
+tuple\mbox{[}numpy.\+ndarray, numpy.\+ndarray\mbox{]} \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1detect_a25e7d83e4de56eb6e72350caa4a1e700}{detect\+\_\+outer\+\_\+contour}} (numpy.\+ndarray detect\+\_\+img, numpy.\+ndarray output\+\_\+img=None, tuple\mbox{[}int, int, int\mbox{]} color=(255, 255, 255))
+\begin{DoxyCompactList}\small\item\em Get the outer side of floorplan, used to get ground. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1detect_a9ea987461272e2dfeebcc215e4e96b05}\label{namespaceFloorplanToBlenderLib_1_1detect_a9ea987461272e2dfeebcc215e4e96b05}} 
+def \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1detect_a9ea987461272e2dfeebcc215e4e96b05}{rect\+Contains}} (rect, pt)
+\begin{DoxyCompactList}\small\item\em Count if Rect contains point @\+Param rect rectangle @\+Param pt point @\+Return boolean @source\+: \href{https://stackoverflow.com/questions/33065834/how-to-detect-if-a-point-is-contained-within-a-bounding-rect-opecv-python}{\texttt{ https\+://stackoverflow.\+com/questions/33065834/how-\/to-\/detect-\/if-\/a-\/point-\/is-\/contained-\/within-\/a-\/bounding-\/rect-\/opecv-\/python}}. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1detect_a58fe776bfb16f187618ba91488963d17}{find\+\_\+details}} (img, noise\+\_\+removal\+\_\+threshold=50, corners\+\_\+threshold=0.\+01, room\+\_\+closing\+\_\+max\+\_\+length=130, gap\+\_\+in\+\_\+wall\+\_\+max\+\_\+threshold=5000, gap\+\_\+in\+\_\+wall\+\_\+min\+\_\+threshold=10)
+\begin{DoxyCompactList}\small\item\em !!! Currently not used in IMPLEMENTATION !!! I have copied and changed this function some... \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Detect. 
+
+This file contains functions used when detecting and calculating shapes in images.
+
+Floorplan\+To\+Blender3d Copyright (C) 2019 Daniel Westberg 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1detect_a25e7d83e4de56eb6e72350caa4a1e700}\label{namespaceFloorplanToBlenderLib_1_1detect_a25e7d83e4de56eb6e72350caa4a1e700}} 
+\index{FloorplanToBlenderLib.detect@{FloorplanToBlenderLib.detect}!detect\_outer\_contour@{detect\_outer\_contour}}
+\index{detect\_outer\_contour@{detect\_outer\_contour}!FloorplanToBlenderLib.detect@{FloorplanToBlenderLib.detect}}
+\doxysubsubsection{\texorpdfstring{detect\_outer\_contour()}{detect\_outer\_contour()}}
+{\footnotesize\ttfamily  tuple\mbox{[}numpy.\+ndarray, numpy.\+ndarray\mbox{]} Floorplan\+To\+Blender\+Lib.\+detect.\+detect\+\_\+outer\+\_\+contour (\begin{DoxyParamCaption}\item[{numpy.\+ndarray}]{detect\+\_\+img,  }\item[{numpy.\+ndarray }]{output\+\_\+img = {\ttfamily None},  }\item[{tuple\mbox{[}int, int, int\mbox{]} }]{color = {\ttfamily (255,~255,~255)} }\end{DoxyParamCaption})}
+
+
+
+Get the outer side of floorplan, used to get ground. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em detect\+\_\+img} & Image to detect from.\\
+\hline
+{\em output\+\_\+img} & Image for output.\\
+\hline
+{\em color} & Tuple of 3 integer values in range from 0 to 255 to set RGB color on output.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An approximation of the outer contour, output image if provided.
+\end{DoxyReturn}
+\hypertarget{namespaceFloorplanToBlenderLib_1_1detect_autotoc_md9}{}\doxysubsubsection{Source}\label{namespaceFloorplanToBlenderLib_1_1detect_autotoc_md9}
+\href{https://stackoverflow.com/questions/50930033/drawing-lines-and-distance-to-them-on-image-opencv-python}{\texttt{ https\+://stackoverflow.\+com/questions/50930033/drawing-\/lines-\/and-\/distance-\/to-\/them-\/on-\/image-\/opencv-\/python}} \mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1detect_a616a5052927debbbc6fdc3bd53797de7}\label{namespaceFloorplanToBlenderLib_1_1detect_a616a5052927debbbc6fdc3bd53797de7}} 
+\index{FloorplanToBlenderLib.detect@{FloorplanToBlenderLib.detect}!detect\_precise\_boxes@{detect\_precise\_boxes}}
+\index{detect\_precise\_boxes@{detect\_precise\_boxes}!FloorplanToBlenderLib.detect@{FloorplanToBlenderLib.detect}}
+\doxysubsubsection{\texorpdfstring{detect\_precise\_boxes()}{detect\_precise\_boxes()}}
+{\footnotesize\ttfamily  tuple\mbox{[}list\mbox{[}numpy.\+ndarray\mbox{]}, numpy.\+ndarray\mbox{]} Floorplan\+To\+Blender\+Lib.\+detect.\+detect\+\_\+precise\+\_\+boxes (\begin{DoxyParamCaption}\item[{numpy.\+ndarray}]{detect\+\_\+img,  }\item[{numpy.\+ndarray }]{output\+\_\+img = {\ttfamily None},  }\item[{tuple\mbox{[}int, int, int\mbox{]} }]{color = {\ttfamily (100,~100,~0)} }\end{DoxyParamCaption})}
+
+
+
+Detect corners with boxes in image with high precision. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em detect\+\_\+img} & numpy.\+ndarray of shape (height, width). Image to detect from.\\
+\hline
+{\em output\+\_\+img} & \#\+TODO numpy.\+ndarray of shape (???, ???). Image for output.\\
+\hline
+{\em color} & tuple of shape (3,) with integers from 0 to 255. RGB color to set on output.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Corners (list of boxes), output image.
+\end{DoxyReturn}
+\hypertarget{namespaceFloorplanToBlenderLib_1_1detect_autotoc_md8}{}\doxysubsubsection{Source}\label{namespaceFloorplanToBlenderLib_1_1detect_autotoc_md8}
+\href{https://stackoverflow.com/questions/50930033/drawing-lines-and-distance-to-them-on-image-opencv-python}{\texttt{ https\+://stackoverflow.\+com/questions/50930033/drawing-\/lines-\/and-\/distance-\/to-\/them-\/on-\/image-\/opencv-\/python}} \mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1detect_a58fe776bfb16f187618ba91488963d17}\label{namespaceFloorplanToBlenderLib_1_1detect_a58fe776bfb16f187618ba91488963d17}} 
+\index{FloorplanToBlenderLib.detect@{FloorplanToBlenderLib.detect}!find\_details@{find\_details}}
+\index{find\_details@{find\_details}!FloorplanToBlenderLib.detect@{FloorplanToBlenderLib.detect}}
+\doxysubsubsection{\texorpdfstring{find\_details()}{find\_details()}}
+{\footnotesize\ttfamily def Floorplan\+To\+Blender\+Lib.\+detect.\+find\+\_\+details (\begin{DoxyParamCaption}\item[{}]{img,  }\item[{}]{noise\+\_\+removal\+\_\+threshold = {\ttfamily 50},  }\item[{}]{corners\+\_\+threshold = {\ttfamily 0.01},  }\item[{}]{room\+\_\+closing\+\_\+max\+\_\+length = {\ttfamily 130},  }\item[{}]{gap\+\_\+in\+\_\+wall\+\_\+max\+\_\+threshold = {\ttfamily 5000},  }\item[{}]{gap\+\_\+in\+\_\+wall\+\_\+min\+\_\+threshold = {\ttfamily 10} }\end{DoxyParamCaption})}
+
+
+
+!!! Currently not used in IMPLEMENTATION !!! I have copied and changed this function some... 
+
+origin from \href{https://stackoverflow.com/questions/54274610/crop-each-of-them-using-opencv-python}{\texttt{ https\+://stackoverflow.\+com/questions/54274610/crop-\/each-\/of-\/them-\/using-\/opencv-\/python}}
+
+@\+Param img\+: grey scale image of rooms, already eroded and doors removed etc. @\+Param noise\+\_\+removal\+\_\+threshold\+: Minimal area of blobs to be kept. @\+Param corners\+\_\+threshold\+: Threshold to allow corners. Higher removes more of the house. @\+Param room\+\_\+closing\+\_\+max\+\_\+length\+: Maximum line length to add to close off open doors. @\+Param gap\+\_\+in\+\_\+wall\+\_\+threshold\+: Minimum number of pixels to identify component as room instead of hole in the wall. @\+Return\+: rooms\+: list of numpy arrays containing boolean masks for each detected room colored\+\_\+house\+: A colored version of the input image, where each room has a random color. \mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1detect_aded08fbafe09cceeca0a319e59977ed1}\label{namespaceFloorplanToBlenderLib_1_1detect_aded08fbafe09cceeca0a319e59977ed1}} 
+\index{FloorplanToBlenderLib.detect@{FloorplanToBlenderLib.detect}!find\_rooms@{find\_rooms}}
+\index{find\_rooms@{find\_rooms}!FloorplanToBlenderLib.detect@{FloorplanToBlenderLib.detect}}
+\doxysubsubsection{\texorpdfstring{find\_rooms()}{find\_rooms()}}
+{\footnotesize\ttfamily  list Floorplan\+To\+Blender\+Lib.\+detect.\+find\+\_\+rooms (\begin{DoxyParamCaption}\item[{numpy.\+ndarray}]{img,  }\item[{int }]{noise\+\_\+removal\+\_\+threshold = {\ttfamily 50},  }\item[{float }]{corners\+\_\+threshold = {\ttfamily 0.01},  }\item[{int }]{room\+\_\+closing\+\_\+max\+\_\+length = {\ttfamily 130},  }\item[{int }]{gap\+\_\+in\+\_\+wall\+\_\+min\+\_\+threshold = {\ttfamily 5000} }\end{DoxyParamCaption})}
+
+
+
+I have copied and changed this function some... 
+
+origin from \href{https://stackoverflow.com/questions/54274610/crop-each-of-them-using-opencv-python}{\texttt{ https\+://stackoverflow.\+com/questions/54274610/crop-\/each-\/of-\/them-\/using-\/opencv-\/python}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em img} & grey scale image of rooms, already eroded and doors removed etc.\\
+\hline
+{\em noise\+\_\+removal\+\_\+threshold} & Minimal area of blobs to be kept.\\
+\hline
+{\em corners\+\_\+threshold} & Threshold to allow corners. Higher removes more of the house.\\
+\hline
+{\em room\+\_\+closing\+\_\+max\+\_\+length} & Maximum line length to add to close off open doors.\\
+\hline
+{\em gap\+\_\+in\+\_\+wall\+\_\+threshold} & Minimum number of pixels to identify component as room instead of hole in the wall.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+rooms\+: list of numpy arrays containing boolean masks for each detected room colored\+\_\+house\+: A colored version of the input image, where each room has a random color. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1detect_aa78b392937a51e034f4cbe6d49c499b3}\label{namespaceFloorplanToBlenderLib_1_1detect_aa78b392937a51e034f4cbe6d49c499b3}} 
+\index{FloorplanToBlenderLib.detect@{FloorplanToBlenderLib.detect}!wall\_filter@{wall\_filter}}
+\index{wall\_filter@{wall\_filter}!FloorplanToBlenderLib.detect@{FloorplanToBlenderLib.detect}}
+\doxysubsubsection{\texorpdfstring{wall\_filter()}{wall\_filter()}}
+{\footnotesize\ttfamily  numpy.\+ndarray Floorplan\+To\+Blender\+Lib.\+detect.\+wall\+\_\+filter (\begin{DoxyParamCaption}\item[{numpy.\+ndarray}]{gray }\end{DoxyParamCaption})}
+
+
+
+Filter out walls from a grayscale image. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em gray} & numpy.\+ndarray of shape (height, width). Grayscale image to filter walls from.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+numpy.\+ndarray of shape (height, width). Image of walls. 
+\end{DoxyReturn}

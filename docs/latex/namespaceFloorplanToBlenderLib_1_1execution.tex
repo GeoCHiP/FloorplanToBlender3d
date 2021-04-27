@@ -1,0 +1,80 @@
+\hypertarget{namespaceFloorplanToBlenderLib_1_1execution}{}\doxysection{Floorplan\+To\+Blender\+Lib.\+execution Namespace Reference}
+\label{namespaceFloorplanToBlenderLib_1_1execution}\index{FloorplanToBlenderLib.execution@{FloorplanToBlenderLib.execution}}
+
+
+Execution This file contains some example usages and creations of multiple floorplans.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+str \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1execution_aea7c912ec8a14e690e78f30a13b7a514}{simple\+\_\+single}} (str image\+\_\+path)
+\begin{DoxyCompactList}\small\item\em Generate one simple floorplan. \end{DoxyCompactList}\item 
+list \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1execution_a14b3eb66ca701f5cef06b245452528dd}{multiple\+\_\+simple}} (list image\+\_\+paths, bool horizontal=True)
+\begin{DoxyCompactList}\small\item\em Generates several new apartments. \end{DoxyCompactList}\item 
+list \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1execution_ac5efba12da98bdccee381bd1fe009e69}{multiple\+\_\+coord}} (list image\+\_\+paths)
+\begin{DoxyCompactList}\small\item\em Generates new apartments with fixed coordinates. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Execution This file contains some example usages and creations of multiple floorplans. 
+
+Floorplan\+To\+Blender3d Copyright (C) 2019 Daniel Westberg 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1execution_ac5efba12da98bdccee381bd1fe009e69}\label{namespaceFloorplanToBlenderLib_1_1execution_ac5efba12da98bdccee381bd1fe009e69}} 
+\index{FloorplanToBlenderLib.execution@{FloorplanToBlenderLib.execution}!multiple\_coord@{multiple\_coord}}
+\index{multiple\_coord@{multiple\_coord}!FloorplanToBlenderLib.execution@{FloorplanToBlenderLib.execution}}
+\doxysubsubsection{\texorpdfstring{multiple\_coord()}{multiple\_coord()}}
+{\footnotesize\ttfamily  list Floorplan\+To\+Blender\+Lib.\+execution.\+multiple\+\_\+coord (\begin{DoxyParamCaption}\item[{list}]{image\+\_\+paths }\end{DoxyParamCaption})}
+
+
+
+Generates new apartments with fixed coordinates. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em image\+\_\+paths} & List of tuples containing \mbox{[}(img\+\_\+path, pos), ...\mbox{]}.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Paths to the image data. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1execution_a14b3eb66ca701f5cef06b245452528dd}\label{namespaceFloorplanToBlenderLib_1_1execution_a14b3eb66ca701f5cef06b245452528dd}} 
+\index{FloorplanToBlenderLib.execution@{FloorplanToBlenderLib.execution}!multiple\_simple@{multiple\_simple}}
+\index{multiple\_simple@{multiple\_simple}!FloorplanToBlenderLib.execution@{FloorplanToBlenderLib.execution}}
+\doxysubsubsection{\texorpdfstring{multiple\_simple()}{multiple\_simple()}}
+{\footnotesize\ttfamily  list Floorplan\+To\+Blender\+Lib.\+execution.\+multiple\+\_\+simple (\begin{DoxyParamCaption}\item[{list}]{image\+\_\+paths,  }\item[{bool }]{horizontal = {\ttfamily True} }\end{DoxyParamCaption})}
+
+
+
+Generates several new apartments. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em image\+\_\+paths} & List of paths to images.\\
+\hline
+{\em horizontal} & True if apartments should stack horizontal, False if vertical.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Paths to image data. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1execution_aea7c912ec8a14e690e78f30a13b7a514}\label{namespaceFloorplanToBlenderLib_1_1execution_aea7c912ec8a14e690e78f30a13b7a514}} 
+\index{FloorplanToBlenderLib.execution@{FloorplanToBlenderLib.execution}!simple\_single@{simple\_single}}
+\index{simple\_single@{simple\_single}!FloorplanToBlenderLib.execution@{FloorplanToBlenderLib.execution}}
+\doxysubsubsection{\texorpdfstring{simple\_single()}{simple\_single()}}
+{\footnotesize\ttfamily  str Floorplan\+To\+Blender\+Lib.\+execution.\+simple\+\_\+single (\begin{DoxyParamCaption}\item[{str}]{image\+\_\+path }\end{DoxyParamCaption})}
+
+
+
+Generate one simple floorplan. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em image\+\_\+path} & Path to an image\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Path to the generated files 
+\end{DoxyReturn}

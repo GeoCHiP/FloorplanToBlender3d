@@ -1,0 +1,144 @@
+{\bfseries{Table of Contents}} (click to expand)
+
+
+
+ 
+
+    
+
+
+
+$<$details$>$
+
+
+\begin{DoxyItemize}
+\item \href{\#about}{\texttt{ About}}
+\item \href{\#how-to}{\texttt{ How-\/\+To}}
+\begin{DoxyItemize}
+\item \href{\#run-on-docker}{\texttt{ Run on Docker}}
+\item \href{\#run-locally-on-os}{\texttt{ Run locally on OS}}
+\begin{DoxyItemize}
+\item \href{\#run-tutorial}{\texttt{ Run Tutorial}}
+\end{DoxyItemize}
+\end{DoxyItemize}
+\item \href{\#demos}{\texttt{ Demos}}
+\item \href{\#documentation}{\texttt{ Documentation}}
+\item \href{\#testing}{\texttt{ Testing}}
+\item \href{\#References-and-Imports}{\texttt{ References and Imports}}
+\item \href{\#contribute}{\texttt{ Contribute}}
+\item \href{\#Known-Issues}{\texttt{ Known Issues}}
+\item \href{\#license}{\texttt{ License}}
+\end{DoxyItemize}
+
+$<$/details$>$\hypertarget{md__home_geochip_Dev_FloorplanToBlender3d_git_refactoring_README_autotoc_md0}{}\doxysection{About}\label{md__home_geochip_Dev_FloorplanToBlender3d_git_refactoring_README_autotoc_md0}
+The virtualisation of real life objects has been a hot topic for several years. As I started learning about 3d modelling in \href{https://www.blender.org/}{\texttt{ Blender3d}} I thought of the idea to use simple imaging on floorplans to automatically create corresponding 3d models. It is much easier than it sounds and uses a low amount of resources, enabling it to be used on low hardware. By utilizing Blender3d, all created objects will be easy to transfer to any other 3d rendering program. Such as \href{https://unity.com/}{\texttt{ Unity}}, \href{https://www.unrealengine.com/en-US/}{\texttt{ Unreal Engine}} or \href{https://www.autodesk.com/solutions/cad-software}{\texttt{ CAD}}.\hypertarget{md__home_geochip_Dev_FloorplanToBlender3d_git_refactoring_README_autotoc_md1}{}\doxysection{How-\/\+To}\label{md__home_geochip_Dev_FloorplanToBlender3d_git_refactoring_README_autotoc_md1}
+This part contains information about how to setup and execute this program.
+
+{\bfseries{NOTE}} \+: Using other versions of the required programs and libraries than specified in Dockerfiles might require changes in the implementation. It is only guaranteed that this implementation will work if the assigned versions and all requirements are met.
+
+{\bfseries{NOTE}} \+: To avoid any version related problems use the Docker implementation.\hypertarget{md__home_geochip_Dev_FloorplanToBlender3d_git_refactoring_README_autotoc_md2}{}\doxysubsection{Run on Docker}\label{md__home_geochip_Dev_FloorplanToBlender3d_git_refactoring_README_autotoc_md2}
+Firstly you need to install a suitable \href{https://www.docker.com/}{\texttt{ Docker}} environment on your device. This project contains a {\ttfamily Docker\+File} which uses the {\ttfamily Ubuntu 18.\+04} image so make sure your docker environment is set to linux containers.
+
+This project is linked to \href{https://hub.docker.com/r/grebtsew/floorplan-to-blender}{\texttt{ Docker Hub}} which means a maintained and prebuilt container can be pulled directly by running\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{docker pull grebtsew/floorplan-\/to-\/blender}
+\DoxyCodeLine{\# run the container:}
+\DoxyCodeLine{docker run -\/it grebtsew/floorplan-\/to-\/blender}
+
+\end{DoxyCode}
+
+
+{\bfseries{NOTE}} \+: For more information about how the dockerfile and docker-\/compose files can be used to build and run the image to add your own content read more here.
+
+To pull and run the container together in a one line command run\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{docker-\/compose run ftb}
+
+\end{DoxyCode}
+\hypertarget{md__home_geochip_Dev_FloorplanToBlender3d_git_refactoring_README_autotoc_md3}{}\doxysubsection{Run locally on OS}\label{md__home_geochip_Dev_FloorplanToBlender3d_git_refactoring_README_autotoc_md3}
+This tutorial will describe how to install this implementation directly on your device. If you are a {\ttfamily Linux/\+Ubuntu} user, look at {\ttfamily Dockerfile} for better instructions.
+
+These are the programs that are required to run this implementation.
+
+
+\begin{DoxyItemize}
+\item \href{https://www.blender.org/}{\texttt{ Blender3d $>$ 2.\+82}}
+\item {\ttfamily Python $>$== 3.\+6.\+5}
+\end{DoxyItemize}
+
+With a suiteable {\ttfamily blender}, {\ttfamily python} and {\ttfamily python pip} installed you can have {\ttfamily Python3 pip} install all required packages by running\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{pip install -\/r requirements.txt}
+
+\end{DoxyCode}
+
+
+Clone or download this repo\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{git clone https://github.com/grebtsew/FloorplanToBlender3d.git}
+\DoxyCodeLine{````}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\#\# Run Tutorial}
+\DoxyCodeLine{This tutorial takes you through the execution of this program.}
+\DoxyCodeLine{}
+\DoxyCodeLine{1. Receive floorplan as image, from pdf or by using other method (for example paint)}
+\DoxyCodeLine{2. Run python script `create\_blender\_project\_from\_floorplan.py`}
+\DoxyCodeLine{3. Follow instructions}
+\DoxyCodeLine{4. Created `floorplan.blender` files will be saved under `./target`}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{<span style="{}color:blue"{}>**NOTE**</span>}
+\DoxyCodeLine{: For more information about alternative ways of executing the implementation read more [here](./Docs/README.md).}
+\DoxyCodeLine{}
+\DoxyCodeLine{\# Demos}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\# Create Floorplan in Blender3d}
+\DoxyCodeLine{Here we demo the program. First of we need a floorplan image to process.}
+\DoxyCodeLine{We use `example.png`, see below:}
+\DoxyCodeLine{![Floorplanexample](Images/example.png)}
+\DoxyCodeLine{}
+\DoxyCodeLine{Next up we execute our script and answer the questions:}
+\DoxyCodeLine{![gif1](Images/demo1.gif)}
+\DoxyCodeLine{}
+\DoxyCodeLine{Finally we can open the newly created floorplan.blender file and see the result:}
+\DoxyCodeLine{![gif2](Images/demo2.gif)}
+\DoxyCodeLine{}
+\DoxyCodeLine{<span style="{}color:blue"{}>**NOTE**</span>: This demo only uses default settings. For instance coloring is by default random.}
+\DoxyCodeLine{}
+\DoxyCodeLine{\# Documentation}
+\DoxyCodeLine{For more information and tutorial of how to use the ftb library do checkout [docs](Docs/README.md)!}
+\DoxyCodeLine{}
+\DoxyCodeLine{\# Testing}
+\DoxyCodeLine{Vital and core functionality are tested with pytest. To run tests yourself enter `Testing`-\/folder and run:}
+\DoxyCodeLine{```cmd}
+\DoxyCodeLine{pytest}
+
+\end{DoxyCode}
+\hypertarget{md__home_geochip_Dev_FloorplanToBlender3d_git_refactoring_README_autotoc_md4}{}\doxysection{References and Imports}\label{md__home_geochip_Dev_FloorplanToBlender3d_git_refactoring_README_autotoc_md4}
+During the development of this project I have been searching alot and copied code from {\ttfamily Stack\+Overflow}. I share links to copied code and other contributors here\+:
+
+
+\begin{DoxyItemize}
+\item First look at problem \+: \href{https://mathematica.stackexchange.com/questions/19546/image-processing-floor-plan-detecting-rooms-borders-area-and-room-names-t}{\texttt{ https\+://mathematica.\+stackexchange.\+com/questions/19546/image-\/processing-\/floor-\/plan-\/detecting-\/rooms-\/borders-\/area-\/and-\/room-\/names-\/t}}
+\item Room detection \+: \href{https://stackoverflow.com/questions/54274610/crop-each-of-them-using-opencv-python}{\texttt{ https\+://stackoverflow.\+com/questions/54274610/crop-\/each-\/of-\/them-\/using-\/opencv-\/python}}
+\item Watershed \+: \href{https://docs.opencv.org/3.1.0/d3/db4/tutorial_py_watershed.html}{\texttt{ https\+://docs.\+opencv.\+org/3.\+1.\+0/d3/db4/tutorial\+\_\+py\+\_\+watershed.\+html}}
+\item Shape detection \+: \href{https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_feature2d/py_features_harris/py_features_harris.html}{\texttt{ https\+://docs.\+opencv.\+org/3.\+0-\/beta/doc/py\+\_\+tutorials/py\+\_\+feature2d/py\+\_\+features\+\_\+harris/py\+\_\+features\+\_\+harris.\+html}}
+\item Distance in image \+: \href{https://stackoverflow.com/questions/50930033/drawing-lines-and-distance-to-them-on-image-opencv-python}{\texttt{ https\+://stackoverflow.\+com/questions/50930033/drawing-\/lines-\/and-\/distance-\/to-\/them-\/on-\/image-\/opencv-\/python}}
+\item Rect contain \+: \href{https://stackoverflow.com/questions/33065834/how-to-detect-if-a-point-is-contained-within-a-bounding-rect-opecv-python}{\texttt{ https\+://stackoverflow.\+com/questions/33065834/how-\/to-\/detect-\/if-\/a-\/point-\/is-\/contained-\/within-\/a-\/bounding-\/rect-\/opecv-\/python}}
+\item Line detection \+: \href{https://docs.opencv.org/3.0-beta/doc/py_tutorials/py_imgproc/py_houghlines/py_houghlines.html}{\texttt{ https\+://docs.\+opencv.\+org/3.\+0-\/beta/doc/py\+\_\+tutorials/py\+\_\+imgproc/py\+\_\+houghlines/py\+\_\+houghlines.\+html}}
+\item Readme tips\+: \href{https://github.com/matiassingers/awesome-readme}{\texttt{ https\+://github.\+com/matiassingers/awesome-\/readme}}
+\end{DoxyItemize}\hypertarget{md__home_geochip_Dev_FloorplanToBlender3d_git_refactoring_README_autotoc_md5}{}\doxysection{Contribute}\label{md__home_geochip_Dev_FloorplanToBlender3d_git_refactoring_README_autotoc_md5}
+Let me know if you want to contribute to this project, also if you want me to add more functions or answer questions, let me know!\hypertarget{md__home_geochip_Dev_FloorplanToBlender3d_git_refactoring_README_autotoc_md6}{}\doxysection{Known Issues}\label{md__home_geochip_Dev_FloorplanToBlender3d_git_refactoring_README_autotoc_md6}
+These are some known and relevant issues with the current implementation\+:
+\begin{DoxyItemize}
+\item Floorplan images needs to be quite small for detections to work at this time. If you plan on using a large image, consider downscaling it.
+\item Required programs and libraries might change in future versions, this might require some changes in this implementation for it to work. If you insist on not using the versions specified in Dockerfile, a coding effort might be required.
+\end{DoxyItemize}\hypertarget{md__home_geochip_Dev_FloorplanToBlender3d_git_refactoring_README_autotoc_md7}{}\doxysection{License}\label{md__home_geochip_Dev_FloorplanToBlender3d_git_refactoring_README_autotoc_md7}
+\mbox{[}GNU GENERAL PUBLIC LICENSE\mbox{]}(license) Version 3, 29 June 2007
+
+COPYRIGHT @ Grebtsew 2019 

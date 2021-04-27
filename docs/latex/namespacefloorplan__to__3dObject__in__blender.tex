@@ -1,0 +1,80 @@
+\hypertarget{namespacefloorplan__to__3dObject__in__blender}{}\doxysection{floorplan\+\_\+to\+\_\+3d\+Object\+\_\+in\+\_\+blender Namespace Reference}
+\label{namespacefloorplan__to__3dObject__in__blender}\index{floorplan\_to\_3dObject\_in\_blender@{floorplan\_to\_3dObject\_in\_blender}}
+
+
+Floorplan to Blender.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+object \mbox{\hyperlink{namespacefloorplan__to__3dObject__in__blender_a5d2b08acdbe686dd64c8040727cf77ee}{read\+\_\+from\+\_\+file}} (str file\+\_\+path)
+\begin{DoxyCompactList}\small\item\em Read verts data from a file. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespacefloorplan__to__3dObject__in__blender_a18eccd06a2008ae00b7359d64ca3c2cc}\label{namespacefloorplan__to__3dObject__in__blender_a18eccd06a2008ae00b7359d64ca3c2cc}} 
+def {\bfseries init\+\_\+object} (name)
+\item 
+\mbox{\Hypertarget{namespacefloorplan__to__3dObject__in__blender_a7077ced494d59a91876018e2066f8631}\label{namespacefloorplan__to__3dObject__in__blender_a7077ced494d59a91876018e2066f8631}} 
+def {\bfseries average} (lst)
+\item 
+\mbox{\Hypertarget{namespacefloorplan__to__3dObject__in__blender_ae05b0de838262b20253425b4c18bab8c}\label{namespacefloorplan__to__3dObject__in__blender_ae05b0de838262b20253425b4c18bab8c}} 
+def {\bfseries get\+\_\+mesh\+\_\+center} (verts)
+\item 
+\mbox{\Hypertarget{namespacefloorplan__to__3dObject__in__blender_a8c10e23b0cf59f929c3945d3dee53845}\label{namespacefloorplan__to__3dObject__in__blender_a8c10e23b0cf59f929c3945d3dee53845}} 
+def {\bfseries subtract\+\_\+center\+\_\+verts} (verts1, verts2)
+\item 
+\mbox{\Hypertarget{namespacefloorplan__to__3dObject__in__blender_aa12db65a9196f45cc2b07177533c3d32}\label{namespacefloorplan__to__3dObject__in__blender_aa12db65a9196f45cc2b07177533c3d32}} 
+def \mbox{\hyperlink{namespacefloorplan__to__3dObject__in__blender_aa12db65a9196f45cc2b07177533c3d32}{create\+\_\+custom\+\_\+mesh}} (objname, verts, faces, pos=None, rot=None, mat=None, cen=None)
+\begin{DoxyCompactList}\small\item\em @\+Param objname, name of new mesh @\+Param pos, object position \mbox{[}x, y, z\mbox{]} @\+Param vertex, corners @\+Param faces, buildorder \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespacefloorplan__to__3dObject__in__blender_a8c8ce439cbc7769505570ac19ce32c50}\label{namespacefloorplan__to__3dObject__in__blender_a8c8ce439cbc7769505570ac19ce32c50}} 
+def {\bfseries create\+\_\+mat} (rgb\+\_\+color)
+\item 
+\mbox{\Hypertarget{namespacefloorplan__to__3dObject__in__blender_aab1ac9d4d5197994ae64954e2949c5ba}\label{namespacefloorplan__to__3dObject__in__blender_aab1ac9d4d5197994ae64954e2949c5ba}} 
+def {\bfseries main} (argv)
+\item 
+\mbox{\Hypertarget{namespacefloorplan__to__3dObject__in__blender_a29ccf1fa854311190681e1880492fb7e}\label{namespacefloorplan__to__3dObject__in__blender_a29ccf1fa854311190681e1880492fb7e}} 
+def {\bfseries create\+\_\+floorplan} (base\+\_\+path, program\+\_\+path, name=0)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Floorplan to Blender. 
+
+Floorplan\+To\+Blender3d Copyright (C) 2019 Daniel Westberg
+
+This code read data from a file and creates a 3d model of that data. RUN THIS CODE FROM BLENDER
+
+The new implementation starts blender and executes this script in a new project so tutorial below can be ignored if you don\textquotesingle{}t want to do this manually in blender.
+
+HOW TO\+: (old style)
+
+
+\begin{DoxyEnumerate}
+\item Run create script to create data files for your floorplan image.
+\item Edit path in this file to generated data files.
+\item Start blender
+\item Open Blender text editor
+\item Open this file \char`\"{}alt+o\char`\"{}
+\item Run script
+\end{DoxyEnumerate}
+
+This code is tested on Windows 10, Blender 2.\+79, in January 2019. 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespacefloorplan__to__3dObject__in__blender_a5d2b08acdbe686dd64c8040727cf77ee}\label{namespacefloorplan__to__3dObject__in__blender_a5d2b08acdbe686dd64c8040727cf77ee}} 
+\index{floorplan\_to\_3dObject\_in\_blender@{floorplan\_to\_3dObject\_in\_blender}!read\_from\_file@{read\_from\_file}}
+\index{read\_from\_file@{read\_from\_file}!floorplan\_to\_3dObject\_in\_blender@{floorplan\_to\_3dObject\_in\_blender}}
+\doxysubsubsection{\texorpdfstring{read\_from\_file()}{read\_from\_file()}}
+{\footnotesize\ttfamily  object floorplan\+\_\+to\+\_\+3d\+Object\+\_\+in\+\_\+blender.\+read\+\_\+from\+\_\+file (\begin{DoxyParamCaption}\item[{str}]{file\+\_\+path }\end{DoxyParamCaption})}
+
+
+
+Read verts data from a file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+\_\+path} & Path to a file.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+data 
+\end{DoxyReturn}

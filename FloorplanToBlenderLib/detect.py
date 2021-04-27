@@ -1,5 +1,6 @@
 """
 Detect
+
 This file contains functions used when detecting and calculating shapes in images.
 
 FloorplanToBlender3d
@@ -7,27 +8,25 @@ Copyright (C) 2019 Daniel Westberg
 """
 
 
-import numpy as np
+import logging
+
+import numpy
 import cv2
 
 
-def wall_filter(gray: np.ndarray) -> np.ndarray:
-    """Filter out walls from a grayscale image.
+def wall_filter(gray: numpy.ndarray) -> numpy.ndarray:
+    """ Filter out walls from a grayscale image.
 
-    Parameters
-    ----------
-    gray: numpy.ndarray
-        Grayscale image to filter walls from.
+    @param gray
+        numpy.ndarray of shape (height, width). Grayscale image to filter walls from.
 
-    Returns
-    -------
-    numpy.ndarray
-        Image of walls.
+    @return
+        numpy.ndarray of shape (height, width). Image of walls.
     """
     ret, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
 
     # noise removal
-    kernel = np.ones((3, 3), np.uint8)
+    kernel = numpy.ones((3, 3), numpy.uint8)
     opening = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel, iterations=2)
 
     sure_bg = cv2.dilate(opening, kernel, iterations=3)
@@ -35,28 +34,28 @@ def wall_filter(gray: np.ndarray) -> np.ndarray:
     dist_transform = cv2.distanceTransform(opening, cv2.DIST_L2, 5)
     ret, sure_fg = cv2.threshold(0.5 * dist_transform, 0.2 * dist_transform.max(), 255, 0)
 
-    sure_fg = np.uint8(sure_fg)
+    sure_fg = numpy.uint8(sure_fg)
     walls_image = cv2.subtract(sure_bg, sure_fg)
 
     return walls_image
 
 
-def detect_precise_boxes(detect_img: np.ndarray, output_img: np.ndarray = None,
-                         color: tuple[int, int, int] = (100, 100, 0)) -> tuple[list[np.ndarray], np.ndarray]:
-    """Detect corners with boxes in image with high precision.
+def detect_precise_boxes(detect_img: numpy.ndarray,
+                         output_img: numpy.ndarray = None,
+                         color: tuple[int, int, int] = (100, 100, 0)) -> tuple[list[numpy.ndarray], numpy.ndarray]:
+    """ Detect corners with boxes in image with high precision.
 
-    Parameters
-    ----------
-    detect_img: numpy.ndarray
-        Image to detect from.
-    output_img: numpy.ndarray
-        Image for output.
-    color: tuple[int, int, int]
-        Color to set on output.
+    @param detect_img
+        numpy.ndarray of shape (height, width). Image to detect from.
 
-    Returns
-    -------
-    tuple[list[numpy.ndarray], numpy.ndarray]
+    @param output_img
+        #TODO
+        numpy.ndarray of shape (???, ???). Image for output.
+
+    @param color
+        tuple of shape (3,) with integers from 0 to 255. RGB color to set on output.
+
+    @return
         Corners (list of boxes), output image.
 
     Source
@@ -67,7 +66,6 @@ def detect_precise_boxes(detect_img: np.ndarray, output_img: np.ndarray = None,
 
     contours, hierarchy = cv2.findContours(detect_img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-    largest_contour_area = 0
     for cnt in contours:
         epsilon = 0.001 * cv2.arcLength(cnt, closed=True)
         approx = cv2.approxPolyDP(cnt, epsilon, closed=True)
@@ -91,7 +89,7 @@ def remove_noise(img, noise_removal_threshold):
     img[img < 128] = 0
     img[img > 128] = 255
     contours, _ = cv2.findContours(~img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    mask = np.zeros_like(img)
+    mask = numpy.zeros_like(img)
     for contour in contours:
         area = cv2.contourArea(contour)
         if area > noise_removal_threshold:
@@ -109,7 +107,7 @@ def find_corners_and_draw_lines(img, corners_threshold, room_closing_max_length)
     @Return output image
     """
     # Detect corners (you can play with the parameters here)
-    kernel = np.ones((1,1),np.uint8)
+    kernel = numpy.ones((1,1),numpy.uint8)
     dst = cv2.cornerHarris(img ,2,3,0.04)
     dst = cv2.erode(dst,kernel, iterations = 10)
     corners = dst > corners_threshold * dst.max()
@@ -118,7 +116,7 @@ def find_corners_and_draw_lines(img, corners_threshold, room_closing_max_length)
     # This gets some false positives.
     # You could try to disallow drawing through other existing lines for example.
     for y,row in enumerate(corners):
-        x_same_y = np.argwhere(row)
+        x_same_y = numpy.argwhere(row)
         for x1, x2 in zip(x_same_y[:-1], x_same_y[1:]):
 
             if x2[0] - x1[0] < room_closing_max_length:
@@ -126,7 +124,7 @@ def find_corners_and_draw_lines(img, corners_threshold, room_closing_max_length)
                 cv2.line(img, (x1[0], y), (x2[0], y), color, 1)
 
     for x,col in enumerate(corners.T):
-        y_same_x = np.argwhere(col)
+        y_same_x = numpy.argwhere(col)
         for y1, y2 in zip(y_same_x[:-1], y_same_x[1:]):
             if y2[0] - y1[0] < room_closing_max_length:
                 color = 0
@@ -145,29 +143,41 @@ def mark_outside_black(img, mask):
     contours, _ = cv2.findContours(~img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     contour_sizes = [(cv2.contourArea(contour), contour) for contour in contours]
     biggest_contour = max(contour_sizes, key=lambda x: x[0])[1]
-    mask = np.zeros_like(mask)
+    mask = numpy.zeros_like(mask)
     cv2.fillPoly(mask, [biggest_contour], 255)
     img[mask == 0] = 0
     return img, mask
 
 
-def find_rooms(img, noise_removal_threshold=50, corners_threshold=0.01,
-               room_closing_max_length=130,
-               gap_in_wall_min_threshold=5000):
+def find_rooms(img: numpy.ndarray,
+               noise_removal_threshold: int = 50,
+               corners_threshold: float = 0.01,
+               room_closing_max_length: int = 130,
+               gap_in_wall_min_threshold: int = 5000) -> list:
 
-    """
-    I have copied and changed this function some...
+    """ I have copied and changed this function some...
 
     origin from
     https://stackoverflow.com/questions/54274610/crop-each-of-them-using-opencv-python
 
-    @param img: grey scale image of rooms, already eroded and doors removed etc.
-    @param noise_removal_threshold: Minimal area of blobs to be kept.
-    @param corners_threshold: Threshold to allow corners. Higher removes more of the house.
-    @param room_closing_max_length: Maximum line length to add to close off open doors.
-    @param gap_in_wall_threshold: Minimum number of pixels to identify component as room instead of hole in the wall.
-    @return: rooms: list of numpy arrays containing boolean masks for each detected room
-             colored_house: A colored version of the input image, where each room has a random color.
+    @param img grey
+        scale image of rooms, already eroded and doors removed etc.
+    
+    @param noise_removal_threshold
+        Minimal area of blobs to be kept.
+    
+    @param corners_threshold
+        Threshold to allow corners. Higher removes more of the house.
+    
+    @param room_closing_max_length
+        Maximum line length to add to close off open doors.
+    
+    @param gap_in_wall_threshold
+        Minimum number of pixels to identify component as room instead of hole in the wall.
+    
+    @return
+        rooms: list of numpy arrays containing boolean masks for each detected room
+        colored_house: A colored version of the input image, where each room has a random color.
     """
     assert 0 <= corners_threshold <= 1
     # Remove noise left from door removal
@@ -182,15 +192,15 @@ def find_rooms(img, noise_removal_threshold=50, corners_threshold=0.01,
     # Find the connected components in the house
     ret, labels = cv2.connectedComponents(img)
     img = cv2.cvtColor(img,cv2.COLOR_GRAY2RGB)
-    unique = np.unique(labels)
+    unique = numpy.unique(labels)
     rooms = []
     for label in unique:
         component = labels == label
-        if img[component].sum() == 0 or np.count_nonzero(component) < gap_in_wall_min_threshold:
+        if img[component].sum() == 0 or numpy.count_nonzero(component) < gap_in_wall_min_threshold:
             color = 0
         else:
             rooms.append(component)
-            color = np.random.randint(0, 255, size=3)
+            color = numpy.random.randint(0, 255, size=3)
         img[component] = color
     return rooms, img
 
@@ -224,23 +234,21 @@ def detectAndRemovePreciseBoxes(detect_img, output_img = None, color = [255, 255
     return res, output_img
 
 
-def detect_outer_contours(detect_img: np.ndarray, output_img: np.ndarray = None, color=(255, 255, 255)):
-    """Get the outer side of floorplan, used to get ground.
+def detect_outer_contour(detect_img: numpy.ndarray, output_img: numpy.ndarray = None,
+                          color: tuple[int, int, int] = (255, 255, 255)) -> tuple[numpy.ndarray, numpy.ndarray]:
+    """ Get the outer side of floorplan, used to get ground.
 
-    Parameters
-    ----------
-    detect_img: numpy.ndarray
+    @param detect_img
         Image to detect from.
 
-    output_img: numpy.ndarray
+    @param output_img
         Image for output.
-    color: Iterable[int]
-        Iterable of 3 integer values in range from 0 to 255 to set RGB color on output.
 
-    Returns
-    -------
-    Tuple[List[numpy.ndarray], numpy.ndarray]
-        An approximation of outer contour, output image if provided.
+    @param color
+        Tuple of 3 integer values in range from 0 to 255 to set RGB color on output.
+
+    @return
+        An approximation of the outer contour, output image if provided.
 
     Source
     ------
@@ -250,10 +258,10 @@ def detect_outer_contours(detect_img: np.ndarray, output_img: np.ndarray = None,
 
     contours, hierarchy = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-    contours.sort(key=cv2.contourArea, reverse=True)
+    largest_contour = max(contours, key=cv2.contourArea)
 
-    epsilon = 0.001 * cv2.arcLength(contours[0], closed=True)
-    approx = cv2.approxPolyDP(contours[0], epsilon, closed=True)
+    epsilon = 0.001 * cv2.arcLength(largest_contour, closed=True)
+    approx = cv2.approxPolyDP(largest_contour, epsilon, closed=True)
 
     if output_img is not None:
         final = cv2.drawContours(output_img, [approx], 0, color)
@@ -308,15 +316,15 @@ def find_details(img, noise_removal_threshold=50, corners_threshold=0.01,
     # Find the connected components in the house
     ret, labels = cv2.connectedComponents(img)
     img = cv2.cvtColor(img,cv2.COLOR_GRAY2RGB)
-    unique = np.unique(labels)
+    unique = numpy.unique(labels)
     details = []
     for label in unique:
         component = labels == label
-        if img[component].sum() == 0 or np.count_nonzero(component) < gap_in_wall_min_threshold or np.count_nonzero(component) > gap_in_wall_max_threshold:
+        if img[component].sum() == 0 or numpy.count_nonzero(component) < gap_in_wall_min_threshold or numpy.count_nonzero(component) > gap_in_wall_max_threshold:
             color = 0
         else:
             details.append(component)
-            color = np.random.randint(0, 255, size=3)
+            color = numpy.random.randint(0, 255, size=3)
 
         img[component] = color
 

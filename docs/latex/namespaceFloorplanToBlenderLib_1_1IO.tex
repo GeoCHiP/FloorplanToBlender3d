@@ -1,0 +1,119 @@
+\hypertarget{namespaceFloorplanToBlenderLib_1_1IO}{}\doxysection{Floorplan\+To\+Blender\+Lib.\+IO Namespace Reference}
+\label{namespaceFloorplanToBlenderLib_1_1IO}\index{FloorplanToBlenderLib.IO@{FloorplanToBlenderLib.IO}}
+
+
+\mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1IO}{IO}}.  
+
+
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classFloorplanToBlenderLib_1_1IO_1_1NumpyArrayEncoder}{Numpy\+Array\+Encoder}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1IO_a3af9e68fb4bb0272da5627dbc1acb907}\label{namespaceFloorplanToBlenderLib_1_1IO_a3af9e68fb4bb0272da5627dbc1acb907}} 
+def \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1IO_a3af9e68fb4bb0272da5627dbc1acb907}{generate\+\_\+config\+\_\+file}} ()
+\begin{DoxyCompactList}\small\item\em Generate new config file, if none exists. \end{DoxyCompactList}\item 
+tuple\mbox{[}str\mbox{]} \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1IO_a1a8b2eb55b7306d7ee35b8780b425db5}{config\+\_\+get\+\_\+default}} ()
+\begin{DoxyCompactList}\small\item\em Read and return default values. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1IO_a51673b376d1cab64f10841f7e9219560}{save\+\_\+to\+\_\+file}} (str filepath, object data)
+\begin{DoxyCompactList}\small\item\em Saves our resulting array as json in file. \end{DoxyCompactList}\item 
+object \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1IO_ab16039b795f30b73c2cabb99d9d90a7b}{read\+\_\+from\+\_\+file}} (str file\+\_\+path)
+\begin{DoxyCompactList}\small\item\em Read verts data from file. \end{DoxyCompactList}\item 
+str \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1IO_a4871a607900d33056bb576d42fe90dfd}{clean\+\_\+data\+\_\+folder}} (str path)
+\begin{DoxyCompactList}\small\item\em Remove old data files. \end{DoxyCompactList}\item 
+str \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1IO_a841eb904d47374a0eaab07e5f70058d3}{create\+\_\+new\+\_\+floorplan\+\_\+path}} (str path)
+\begin{DoxyCompactList}\small\item\em Creates next free name to floorplan data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1IO}{IO}}. 
+
+This file contains functions for handling files.
+
+Floorplan\+To\+Blender3d Copyright (C) 2019 Daniel Westberg 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1IO_a4871a607900d33056bb576d42fe90dfd}\label{namespaceFloorplanToBlenderLib_1_1IO_a4871a607900d33056bb576d42fe90dfd}} 
+\index{FloorplanToBlenderLib.IO@{FloorplanToBlenderLib.IO}!clean\_data\_folder@{clean\_data\_folder}}
+\index{clean\_data\_folder@{clean\_data\_folder}!FloorplanToBlenderLib.IO@{FloorplanToBlenderLib.IO}}
+\doxysubsubsection{\texorpdfstring{clean\_data\_folder()}{clean\_data\_folder()}}
+{\footnotesize\ttfamily  str Floorplan\+To\+Blender\+Lib.\+IO.\+clean\+\_\+data\+\_\+folder (\begin{DoxyParamCaption}\item[{str}]{path }\end{DoxyParamCaption})}
+
+
+
+Remove old data files. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & Path to the data folder. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1IO_a1a8b2eb55b7306d7ee35b8780b425db5}\label{namespaceFloorplanToBlenderLib_1_1IO_a1a8b2eb55b7306d7ee35b8780b425db5}} 
+\index{FloorplanToBlenderLib.IO@{FloorplanToBlenderLib.IO}!config\_get\_default@{config\_get\_default}}
+\index{config\_get\_default@{config\_get\_default}!FloorplanToBlenderLib.IO@{FloorplanToBlenderLib.IO}}
+\doxysubsubsection{\texorpdfstring{config\_get\_default()}{config\_get\_default()}}
+{\footnotesize\ttfamily  tuple\mbox{[}str\mbox{]} Floorplan\+To\+Blender\+Lib.\+IO.\+config\+\_\+get\+\_\+default (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Read and return default values. 
+
+\begin{DoxyReturn}{Returns}
+Default values. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1IO_a841eb904d47374a0eaab07e5f70058d3}\label{namespaceFloorplanToBlenderLib_1_1IO_a841eb904d47374a0eaab07e5f70058d3}} 
+\index{FloorplanToBlenderLib.IO@{FloorplanToBlenderLib.IO}!create\_new\_floorplan\_path@{create\_new\_floorplan\_path}}
+\index{create\_new\_floorplan\_path@{create\_new\_floorplan\_path}!FloorplanToBlenderLib.IO@{FloorplanToBlenderLib.IO}}
+\doxysubsubsection{\texorpdfstring{create\_new\_floorplan\_path()}{create\_new\_floorplan\_path()}}
+{\footnotesize\ttfamily  str Floorplan\+To\+Blender\+Lib.\+IO.\+create\+\_\+new\+\_\+floorplan\+\_\+path (\begin{DoxyParamCaption}\item[{str}]{path }\end{DoxyParamCaption})}
+
+
+
+Creates next free name to floorplan data. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & Path to a floorplan.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+End path. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1IO_ab16039b795f30b73c2cabb99d9d90a7b}\label{namespaceFloorplanToBlenderLib_1_1IO_ab16039b795f30b73c2cabb99d9d90a7b}} 
+\index{FloorplanToBlenderLib.IO@{FloorplanToBlenderLib.IO}!read\_from\_file@{read\_from\_file}}
+\index{read\_from\_file@{read\_from\_file}!FloorplanToBlenderLib.IO@{FloorplanToBlenderLib.IO}}
+\doxysubsubsection{\texorpdfstring{read\_from\_file()}{read\_from\_file()}}
+{\footnotesize\ttfamily  object Floorplan\+To\+Blender\+Lib.\+IO.\+read\+\_\+from\+\_\+file (\begin{DoxyParamCaption}\item[{str}]{file\+\_\+path }\end{DoxyParamCaption})}
+
+
+
+Read verts data from file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+\_\+path} & Path to a file\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Python object 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1IO_a51673b376d1cab64f10841f7e9219560}\label{namespaceFloorplanToBlenderLib_1_1IO_a51673b376d1cab64f10841f7e9219560}} 
+\index{FloorplanToBlenderLib.IO@{FloorplanToBlenderLib.IO}!save\_to\_file@{save\_to\_file}}
+\index{save\_to\_file@{save\_to\_file}!FloorplanToBlenderLib.IO@{FloorplanToBlenderLib.IO}}
+\doxysubsubsection{\texorpdfstring{save\_to\_file()}{save\_to\_file()}}
+{\footnotesize\ttfamily def Floorplan\+To\+Blender\+Lib.\+IO.\+save\+\_\+to\+\_\+file (\begin{DoxyParamCaption}\item[{str}]{filepath,  }\item[{object}]{data }\end{DoxyParamCaption})}
+
+
+
+Saves our resulting array as json in file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+\_\+path} & Path to the output file.\\
+\hline
+{\em data} & Data to write to a file. \\
+\hline
+\end{DoxyParams}

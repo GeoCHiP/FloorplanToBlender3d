@@ -1,5 +1,6 @@
 """
 IO
+
 This file contains functions for handling files.
 
 FloorplanToBlender3d
@@ -13,10 +14,18 @@ import logging
 
 import configparser
 import shutil
+import numpy
+
+
+class NumpyArrayEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, numpy.ndarray):
+            return obj.tolist()
+        return json.JSONEncoder.default(self, obj)
 
 
 def generate_config_file():
-    """Generate new config file, if none exists."""
+    """ Generate new config file, if none exists."""
     config = configparser.ConfigParser()
 
     config['DEFAULT'] = {
@@ -32,11 +41,9 @@ def generate_config_file():
 
 
 def config_get_default() -> tuple[str]:
-    """Read and return default values.
+    """ Read and return default values.
 
-    Returns
-    -------
-    tuple[str]
+    @return
         Default values.
     """
     config = configparser.ConfigParser()
@@ -53,37 +60,31 @@ def config_get_default() -> tuple[str]:
             config['DEFAULT']['mode'])
 
 
-def save_to_file(filepath: str, data: any):
-    """Saves our resulting array as json in file.
+def save_to_file(filepath: str, data: object):
+    """ Saves our resulting array as json in file.
 
-    Parameters
-    ----------
-    file_path: str
+    @param file_path
         Path to the output file.
 
-    data: any
+    @param data
         Data to write to a file.
     """
     filename = filepath + '.json'
 
     with open(filename, 'w') as fp:
-        json.dump(data, fp)
+        json.dump(data, fp, cls=NumpyArrayEncoder)
 
     logger = logging.getLogger(__name__)
     logger.info('Created file: %s', filename)
 
 
-def read_from_file(file_path):
-    """Read verts data from file.
-    
-    Parameters
-    ----------
-    file_path: str
+def read_from_file(file_path: str) -> object:
+    """ Read verts data from file.
+
+    @param file_path
         Path to a file
     
-    Returns
-    -------
-    any
+    @return
         Python object
     """
     filename = file_path + '.json'
@@ -94,12 +95,10 @@ def read_from_file(file_path):
     return data
 
 
-def clean_data_folder(path):
-    """Remove old data files.
+def clean_data_folder(path: str) -> str:
+    """ Remove old data files.
 
-    Parameters
-    ----------
-    path: str
+    @param path
         Path to the data folder.
     """
     for root, dirs, files in os.walk(path):
@@ -109,17 +108,13 @@ def clean_data_folder(path):
             shutil.rmtree(os.path.join(root, d))
 
 
-def create_new_floorplan_path(path):
-    """Creates next free name to floorplan data.
+def create_new_floorplan_path(path: str) -> str:
+    """ Creates next free name to floorplan data.
 
-    Parameters
-    ----------
-    path: str
+    @param path
         Path to a floorplan.
 
-    Returns
-    -------
-    str
+    @return
         End path.
     """
     res = 0

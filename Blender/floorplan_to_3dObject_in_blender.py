@@ -1,10 +1,3 @@
-import bpy
-import numpy as np
-import json
-import sys
-import math
-import os
-
 '''
 Floorplan to Blender
 
@@ -29,20 +22,29 @@ HOW TO: (old style)
 This code is tested on Windows 10, Blender 2.79, in January 2019.
 '''
 
-'''
-Our helpful functions
-'''
 
-def read_from_file(file_path):
-    '''
-    Read from file
-    read verts data from file
-    @Param file_path, path to file
-    @Return data
-    '''
-    #Now read the file back into a Python list object
-    with open(file_path + '.json', 'r') as f:
-        data = json.loads(f.read())
+import json
+import sys
+import math
+import os
+
+import bpy
+import numpy
+
+
+def read_from_file(file_path: str) -> object:
+    """ Read verts data from a file.
+
+    @param file_path
+        Path to a file.
+
+    @return data
+    """
+    # Now read the file back into a Python list object
+    filename = file_path + '.json'
+    with open(filename, 'r') as fp:
+        data = json.load(fp)
+
     return data
 
 def init_object(name):
@@ -120,52 +122,41 @@ def create_custom_mesh(objname, verts, faces, pos = None, rot = None, mat = None
     
     # add material
     if mat is None: # add random color
-        myobject.data.materials.append(create_mat(np.array([0.2, 0.3, 0.8, 1]))) #add the material to the object
+        myobject.data.materials.append(create_mat(numpy.array([0.2, 0.3, 0.8, 1]))) #add the material to the object
     else:
         myobject.data.materials.append(mat) #add the material to the object
     return myobject
+
 
 def create_mat(rgb_color):
     mat = bpy.data.materials.new(name="MaterialName") #set new material to variable
     mat.diffuse_color = rgb_color #change to random color
     return mat
 
-'''
-Main functionallity here!
-'''
-def main(argv):
-    '''
-    Create Walls
-    All walls are square
-    Therefore we split data into two files
-    '''
 
-    # Remove starting objects
+def main(argv):
+    ## Remove starting objects
+
     # Select all
     objs = bpy.data.objects
     objs.remove(objs["Cube"], do_unlink=True)
     objs.remove(objs['Camera'], do_unlink=True)
     objs.remove(objs['Light'], do_unlink=True)
 
-    if(len(argv) > 6): # Note YOU need 7 arguments!
+     # Note YOU need 7 arguments!
+    if(len(argv) > 6):
         program_path = argv[5]
         output_path = argv[6]
     else:
         exit(0)
 
-    '''
-    Instantiate
-    '''
+    # Instantiate
     for i in range(7, len(argv)):
         base_path = argv[i]
         create_floorplan(base_path, program_path, i)
 
-    '''
-    Save to file
-    TODO add several save modes here!
-    '''
 
-    # Join all the parts of the 3d-model in one mesh
+    ## Join all the parts of the 3d-model in one mesh
 
     scene = bpy.context.scene
 
@@ -182,46 +173,40 @@ def main(argv):
     ctx['selected_editable_objects'] = obs
     bpy.ops.object.join(ctx)
 
-    filepath = output_path + os.path.sep + 'floorplan'
+    filepath = os.path.join(output_path, 'floorplan')
     bpy.ops.export_scene.gltf(export_format='GLTF_EMBEDDED', filepath=f'{filepath}.gltf')
 
-    '''
-    Send correct exit code
-    '''
     exit(0)
+
 
 def create_floorplan(base_path,program_path, name=0):
 
     parent, parent_mesh = init_object("Floorplan"+str(name))
 
-    data_path = program_path + os.path.sep + base_path
+    data_path = os.path.join(program_path, base_path)
 
-    path_to_wall_faces_file = data_path + "wall_faces"
-    path_to_wall_verts_file = data_path + "wall_verts"
+    path_to_wall_faces_file = os.path.join(data_path, 'wall_faces')
+    path_to_wall_verts_file = os.path.join(data_path, 'wall_verts')
 
-    path_to_floor_faces_file = data_path + "floor_faces"
-    path_to_floor_verts_file = data_path + "floor_verts"
+    path_to_floor_faces_file = os.path.join(data_path, 'floor_faces')
+    path_to_floor_verts_file = os.path.join(data_path, 'floor_verts')
 
-    path_to_rooms_faces_file = data_path + "rooms_faces"
-    path_to_rooms_verts_file = data_path + "rooms_verts"
+    path_to_rooms_faces_file = os.path.join(data_path, 'rooms_faces')
+    path_to_rooms_verts_file = os.path.join(data_path, 'rooms_verts')
 
-# TODO add window, doors here!
-#    path_to_windows_faces_file = program_path +"\\" + base_path + "windows_faces"
-#    path_to_windows_verts_file = program_path +"\\" + base_path + "windows_verts"
+    path_to_transform_file = os.path.join(program_path, base_path, 'transform')
 
-    path_to_transform_file = program_path + os.path.sep + base_path + "transform"
 
-    '''
-    Get transform
-    '''
+    ## Load transform
+
     # read from file
     transform = read_from_file(path_to_transform_file)
 
-    rot = transform["rotation"]
-    pos = transform["position"]
+    rot = transform['rotation']
+    pos = transform['position']
 
     # Calculate and move floorplan shape to center
-    cen = transform["shape"]
+    cen = transform['shape']
 
     # rotate to fix mirrored floorplan
     parent.rotation_euler = (0, math.pi, 0)
@@ -229,9 +214,9 @@ def create_floorplan(base_path,program_path, name=0):
     # Set Cursor start
     bpy.context.scene.cursor.location = (0,0,0)
 
-    '''
-    Create Walls
-    '''
+
+    ## Create Walls
+
     # get image wall data
     verts = read_from_file(path_to_wall_verts_file)
     faces = read_from_file(path_to_wall_faces_file)
@@ -241,12 +226,12 @@ def create_floorplan(base_path,program_path, name=0):
     wallcount = 0
 
     # Create parent
-    wall_parent, wall_parent_mesh = init_object("Walls")
+    wall_parent, wall_parent_mesh = init_object('Walls')
 
     for box in verts:
-        boxname="Box"+str(boxcount)
+        boxname = 'Box' + str(boxcount)
         for wall in box:
-            wallname = "Wall"+str(wallcount)
+            wallname = 'Wall' + str(wallcount)
 
             obj = create_custom_mesh(boxname + wallname, wall, faces, pos=pos, rot=rot, cen=cen)
             obj.parent = wall_parent
@@ -255,44 +240,36 @@ def create_floorplan(base_path,program_path, name=0):
         boxcount += 1
 
     wall_parent.parent = parent
-   
-    '''
-    Create Floor
-    '''
+
+
+    ## Create Floor
+
     # get image wall data
     verts = read_from_file(path_to_floor_verts_file)
     faces = read_from_file(path_to_floor_faces_file)
 
     # Create mesh from data
-    cornername="Floor"
-    obj = create_custom_mesh(cornername, verts, [faces], pos=pos, mat=create_mat((40,1,1,1)), cen=cen)
+    cornername = 'Floor'
+    obj = create_custom_mesh(cornername, verts, [faces], pos=pos, mat=create_mat((40, 1, 1, 1)), cen=cen)
     obj.parent = parent
 
-    '''
-    Create rooms
-    '''
+
+    ## Create rooms
+
     # get image wall data
     verts = read_from_file(path_to_rooms_verts_file)
     faces = read_from_file(path_to_rooms_faces_file)
 
     # Create parent
-    room_parent, room_parent_mesh = init_object("Rooms")
+    room_parent, room_parent_mesh = init_object('Rooms')
 
     for i in range(0,len(verts)):
-        roomname="Room"+str(i)
+        roomname = 'Room' + str(i)
         obj = create_custom_mesh(roomname, verts[i], faces[i], pos=pos, rot=rot, cen=cen)
         obj.parent = room_parent
 
     room_parent.parent = parent
 
-# Start
-if __name__ == "__main__":
-    main(sys.argv)
 
-    '''
-    TODO:
-    Create door
-    Create window
-    Create details
-    Save as param
-    '''
+if __name__ == '__main__':
+    main(sys.argv)

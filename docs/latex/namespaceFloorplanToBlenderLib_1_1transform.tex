@@ -1,0 +1,92 @@
+\hypertarget{namespaceFloorplanToBlenderLib_1_1transform}{}\doxysection{Floorplan\+To\+Blender\+Lib.\+transform Namespace Reference}
+\label{namespaceFloorplanToBlenderLib_1_1transform}\index{FloorplanToBlenderLib.transform@{FloorplanToBlenderLib.transform}}
+
+
+Transform.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1transform_a65cc2692f31d7a0194f9f5d5b601797c}\label{namespaceFloorplanToBlenderLib_1_1transform_a65cc2692f31d7a0194f9f5d5b601797c}} 
+def \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1transform_a65cc2692f31d7a0194f9f5d5b601797c}{recursive\+\_\+loop\+\_\+element}} (thelist, res)
+\begin{DoxyCompactList}\small\item\em Recursive loop element A recursive function transforming any sized array to a one dimentional array @\+Param thelist, incoming list @\+Param res, resulting list. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1transform_a53b352156a15c19a587bed545c799b3d}\label{namespaceFloorplanToBlenderLib_1_1transform_a53b352156a15c19a587bed545c799b3d}} 
+def \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1transform_a53b352156a15c19a587bed545c799b3d}{verts\+\_\+to\+\_\+poslist}} (verts)
+\begin{DoxyCompactList}\small\item\em Verts to poslist Convert any verts array to a list of positions @\+Param verts of undecided size @\+Return res, list of position. \end{DoxyCompactList}\item 
+numpy.\+ndarray \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1transform_a51249c7420f39eed9a6386fd22aa0384}{scale\+\_\+point\+\_\+to\+\_\+vector}} (numpy.\+ndarray contour, float scale=1, float height=0)
+\begin{DoxyCompactList}\small\item\em Takes an array of 2D points and adds third dimension to them. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1transform_aa33a3832398c472963f05d8c2ca4aeb8}\label{namespaceFloorplanToBlenderLib_1_1transform_aa33a3832398c472963f05d8c2ca4aeb8}} 
+def \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1transform_aa33a3832398c472963f05d8c2ca4aeb8}{write\+\_\+verts\+\_\+on\+\_\+2d\+\_\+image}} (boxes, blank\+\_\+image)
+\begin{DoxyCompactList}\small\item\em Write verts as lines and show image @\+Param boxes, numpy array of boxes @\+Param blank\+\_\+image, image to write and show. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1transform_a9f5ab458168100020b9a624a083c6f43}{create\+\_\+nx4\+\_\+verts\+\_\+and\+\_\+faces}} (contours, height=1, scale=1, ground=0)
+\begin{DoxyCompactList}\small\item\em Create verts and faces. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1transform_a38eb8215b8abf2f318ff9fd8b202dbe8}{create\+\_\+verts}} (boxes, height, scale)
+\begin{DoxyCompactList}\small\item\em Simplified converts 2d poses to 3d poses, and adds a height position @\+Param boxes, 2d boxes as numpy array @\+Param height, 3d height change @\+Param scale, pixel scale amount @\+Return verts, numpy array of vectors. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1transform_a959c47b00f825edfebc44fe95e46fc25}\label{namespaceFloorplanToBlenderLib_1_1transform_a959c47b00f825edfebc44fe95e46fc25}} 
+def \mbox{\hyperlink{namespaceFloorplanToBlenderLib_1_1transform_a959c47b00f825edfebc44fe95e46fc25}{write\+\_\+boxes\+\_\+on\+\_\+2d\+\_\+image}} (boxes, blank\+\_\+image)
+\begin{DoxyCompactList}\small\item\em Write boxes as lines and show image @\+Param boxes, numpy array of boxes @\+Param blank\+\_\+image, image to write and show. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Transform. 
+
+This file contains functions for transforming data between different formats.
+
+Floorplan\+To\+Blender3d Copyright (C) 2019 Daniel Westberg 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1transform_a9f5ab458168100020b9a624a083c6f43}\label{namespaceFloorplanToBlenderLib_1_1transform_a9f5ab458168100020b9a624a083c6f43}} 
+\index{FloorplanToBlenderLib.transform@{FloorplanToBlenderLib.transform}!create\_nx4\_verts\_and\_faces@{create\_nx4\_verts\_and\_faces}}
+\index{create\_nx4\_verts\_and\_faces@{create\_nx4\_verts\_and\_faces}!FloorplanToBlenderLib.transform@{FloorplanToBlenderLib.transform}}
+\doxysubsubsection{\texorpdfstring{create\_nx4\_verts\_and\_faces()}{create\_nx4\_verts\_and\_faces()}}
+{\footnotesize\ttfamily def Floorplan\+To\+Blender\+Lib.\+transform.\+create\+\_\+nx4\+\_\+verts\+\_\+and\+\_\+faces (\begin{DoxyParamCaption}\item[{}]{contours,  }\item[{}]{height = {\ttfamily 1},  }\item[{}]{scale = {\ttfamily 1},  }\item[{}]{ground = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Create verts and faces. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em contours} & \\
+\hline
+{\em height} & \\
+\hline
+{\em scale} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+verts as \mbox{[}\mbox{[}wall1\mbox{]},\mbox{[}wall2\mbox{]},...\mbox{]} numpy array, faces -\/ as array to use on all boxes, wall\+\_\+amount -\/ as integer
+\end{DoxyReturn}
+Use the result by looping over boxes in verts, and create mesh for each box with same face and pos. See create\+\_\+custom\+\_\+mesh in floorplan code. \mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1transform_a38eb8215b8abf2f318ff9fd8b202dbe8}\label{namespaceFloorplanToBlenderLib_1_1transform_a38eb8215b8abf2f318ff9fd8b202dbe8}} 
+\index{FloorplanToBlenderLib.transform@{FloorplanToBlenderLib.transform}!create\_verts@{create\_verts}}
+\index{create\_verts@{create\_verts}!FloorplanToBlenderLib.transform@{FloorplanToBlenderLib.transform}}
+\doxysubsubsection{\texorpdfstring{create\_verts()}{create\_verts()}}
+{\footnotesize\ttfamily def Floorplan\+To\+Blender\+Lib.\+transform.\+create\+\_\+verts (\begin{DoxyParamCaption}\item[{}]{boxes,  }\item[{}]{height,  }\item[{}]{scale }\end{DoxyParamCaption})}
+
+
+
+Simplified converts 2d poses to 3d poses, and adds a height position @\+Param boxes, 2d boxes as numpy array @\+Param height, 3d height change @\+Param scale, pixel scale amount @\+Return verts, numpy array of vectors. 
+
+Scale and create array of box\+\_\+verts \mbox{[}\mbox{[}box1\mbox{]},\mbox{[}box2\mbox{]},...\mbox{]} \mbox{\Hypertarget{namespaceFloorplanToBlenderLib_1_1transform_a51249c7420f39eed9a6386fd22aa0384}\label{namespaceFloorplanToBlenderLib_1_1transform_a51249c7420f39eed9a6386fd22aa0384}} 
+\index{FloorplanToBlenderLib.transform@{FloorplanToBlenderLib.transform}!scale\_point\_to\_vector@{scale\_point\_to\_vector}}
+\index{scale\_point\_to\_vector@{scale\_point\_to\_vector}!FloorplanToBlenderLib.transform@{FloorplanToBlenderLib.transform}}
+\doxysubsubsection{\texorpdfstring{scale\_point\_to\_vector()}{scale\_point\_to\_vector()}}
+{\footnotesize\ttfamily  numpy.\+ndarray Floorplan\+To\+Blender\+Lib.\+transform.\+scale\+\_\+point\+\_\+to\+\_\+vector (\begin{DoxyParamCaption}\item[{numpy.\+ndarray}]{contour,  }\item[{float }]{scale = {\ttfamily 1},  }\item[{float }]{height = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Takes an array of 2D points and adds third dimension to them. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em contour} & numpy.\+ndarray of shape (n\+\_\+points, 1, 2).\\
+\hline
+{\em scale} & Float value to scale every point by.\\
+\hline
+{\em height} & Third z-\/dimension value.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+numpy.\+ndarray of shape (n\+\_\+points, 1, 3) 
+\end{DoxyReturn}

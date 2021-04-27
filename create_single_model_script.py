@@ -9,7 +9,7 @@ from FloorplanToBlenderLib import IO, execution
 
 
 if __name__ == '__main__':
-    log_format = '%(asctime)s - %(levelname)s - %(message)s'
+    log_format = '[%(asctime)s] [%(levelname)s] [%(pathname)s:%(lineno)s] %(message)s'
     logging.basicConfig(level=logging.DEBUG, format=log_format)
 
     # Set required default paths
