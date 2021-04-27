@@ -1,37 +1,53 @@
-import cv2
-import numpy as np
-
-from . import detect
-from . import IO
-from . import transform
-
-'''
+"""
 Generate
 This file contains code for generate data files, used when creating blender project.
 A temp storage of calculated data and a way to transfer data to the blender script.
 
 FloorplanToBlender3d
 Copyright (C) 2019 Daniel Westberg
-'''
-# TODO: create big window implementation (nicer windows!)
-# TODO: write window and door detection and use the generators for them below!
+"""
+
+
+import numpy as np
+import cv2
+import os
+
+
+from . import detect
+from . import IO
+from . import transform
+
 
 # Paths to save folder
-base_path = "Data/"
-path = "Data/"
+base_path = "data/"
+path = "data/"
 
-def generate_all_files(imgpath, info, position=None, rotation=None):
-    '''
-    Generate all data files
-    @Param imgpath
-    @Param info, boolean if should be printed
-    @Param position, vector of float
-    @Param rotation, vector of float
-    @Return path to generated file, shape
-    '''
+
+def generate_all_files(imgpath: str, info: bool,
+                       position: list[float] = None,
+                       rotation: list[float] = None) -> tuple[str, list]:
+    """Generate all data files.
+
+    Parameters
+    ----------
+    imgpath: str
+        Path to the image.
+
+    info: bool
+        Verbose info should be printed.
+
+    position: list[float]
+        #TODO
+
+    rotation: list[float]
+        #TODO
+
+    Returns
+    -------
+    tuple[str, list]
+        Path to the generated files, shape.
+    """
     global path
-
-    print(" ----- Generate ", imgpath, " at pos ", position ," rot ",rotation," -----")
 
     # Get path to save data
     path = IO.create_new_floorplan_path(base_path)
@@ -159,7 +175,7 @@ def generate_rooms_file(img_path, info):
     gray_rooms =  cv2.cvtColor(colored_rooms,cv2.COLOR_BGR2GRAY)
 
     # get box positions for rooms
-    boxes, gray_rooms = detect.detectPreciseBoxes(gray_rooms, gray_rooms)
+    boxes, gray_rooms = detect.detect_precise_boxes(gray_rooms, gray_rooms)
 
     #Create verts
     room_count = 0
@@ -217,7 +233,7 @@ def generate_small_windows_file(img_path, info):
     gray_rooms =  cv2.cvtColor(colored_rooms,cv2.COLOR_BGR2GRAY)
 
     # get box positions for rooms
-    boxes, gray_rooms = detect.detectPreciseBoxes(gray_rooms, gray_rooms)
+    boxes, gray_rooms = detect.detect_precise_boxes(gray_rooms, gray_rooms)
 
     windows = []
     #do a split here, objects next to outside ground are windows, rest are doors or extra space
@@ -287,7 +303,7 @@ def generate_doors_file(img_path, info):
     gray_rooms =  cv2.cvtColor(colored_rooms,cv2.COLOR_BGR2GRAY)
 
     # get box positions for rooms
-    boxes, gray_rooms = detect.detectPreciseBoxes(gray_rooms, gray_rooms)
+    boxes, gray_rooms = detect.detect_precise_boxes(gray_rooms, gray_rooms)
 
     doors = []
 
@@ -312,31 +328,38 @@ def generate_doors_file(img_path, info):
 
     return get_shape(verts, scale)
 
-def generate_floor_file(img_path, info):
-    '''
-    Generate floor data file
-    @Param img_path, path to image
-    @Param info, boolean if should be printed
-    @Return shape
-    '''
-    # Read floorplan image
-    img = cv2.imread(img_path)
+def generate_floor_file(img_path: str, info: bool) -> list:
+    """Generate a floor data file.
 
-    # grayscale image
-    gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+    Parameters
+    ----------
+    img_path: str
+        Path to an image.
+
+    info: bool
+        Verbose info should be printed.
+
+    Returns
+    -------
+    list
+        #TODO
+    """
+    img = cv2.imread(img_path)
+    
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
     # detect outer Contours (simple floor or roof solution)
-    contour, img = detect.detectOuterContours(gray)
+    contour, img = detect.detect_outer_contours(gray)
 
-    # create verts (points 3d), points to use in mesh creations
+    # create verts (3D points), points to use in mesh creations
     verts = []
     # create faces for each plane, describe order to create mesh points
     faces = []
 
-    # Height of waLL
+    # Height of a wall
     height = 1
 
-    # Scale pixel value to 3d pos
+    # Scale a pixel value to 3D pos
     scale = 100
 
     #Create verts
@@ -348,12 +371,8 @@ def generate_floor_file(img_path, info):
         faces.extend([(count)])
         count += 1
 
-
-    if(info):
-        print("Approximated apartment size : ", cv2.contourArea(contour))
-
-    IO.save_to_file(path+"floor_verts", verts)
-    IO.save_to_file(path+"floor_faces", faces)
+    IO.save_to_file(os.path.join(path, 'floor_verts'), verts)
+    IO.save_to_file(os.path.join(path, 'floor_faces'), faces)
 
     return get_shape(verts, scale)
 
@@ -374,7 +393,7 @@ def generate_walls_file(img_path, info):
     wall_img = detect.wall_filter(gray)
 
     # detect walls
-    boxes, img = detect.detectPreciseBoxes(wall_img)
+    boxes, img = detect.detect_precise_boxes(wall_img)
 
     # create verts (points 3d), points to use in mesh creations
     verts = []

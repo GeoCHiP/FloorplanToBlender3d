@@ -41,7 +41,7 @@ def read_from_file(file_path):
     @Return data
     '''
     #Now read the file back into a Python list object
-    with open(file_path+'.txt', 'r') as f:
+    with open(file_path + '.json', 'r') as f:
         data = json.loads(f.read())
     return data
 
@@ -184,7 +184,6 @@ def main(argv):
 
     filepath = output_path + os.path.sep + 'floorplan'
     bpy.ops.export_scene.gltf(export_format='GLTF_EMBEDDED', filepath=f'{filepath}.gltf')
-    bpy.ops.wm.save_as_mainfile(filepath=f'{filepath}.blend')
 
     '''
     Send correct exit code

@@ -1,6 +1,6 @@
-import cv2
 import numpy as np
-from itertools import *
+import cv2
+
 
 '''
 Transform
@@ -9,6 +9,7 @@ This file contains functions for transforming data between different formats.
 FloorplanToBlender3d
 Copyright (C) 2019 Daniel Westberg
 '''
+
 
 def recursive_loop_element(thelist, res):
     '''
@@ -94,13 +95,13 @@ def create_nx4_verts_and_faces(boxes, height = 1, scale = 1, ground = 0):
         for index in range(0, len(box) ):
             temp_verts = []
             # Get current
-            curr = box[index][0];
+            curr = box[index][0]
 
             # is last, link to first
             if(len(box)-1 >= index+1):
-                next = box[index+1][0];
+                next = box[index+1][0]
             else:
-                next = box[0][0]; # link to first pos
+                next = box[0][0] # link to first pos
 
             # Create all 3d poses for each wall
             temp_verts.extend([(curr[0]/scale, curr[1]/scale, ground)])

@@ -1,11 +1,3 @@
-import cv2
-import numpy as np
-
-# TODO: detect windows
-# TODO: detect doors
-# Calculate (actual) size of appartment
-# TODO: text detection
-
 """
 Detect
 This file contains functions used when detecting and calculating shapes in images.
@@ -14,56 +6,79 @@ FloorplanToBlender3d
 Copyright (C) 2019 Daniel Westberg
 """
 
-def wall_filter(gray):
+
+import numpy as np
+import cv2
+
+
+def wall_filter(gray: np.ndarray) -> np.ndarray:
+    """Filter out walls from a grayscale image.
+
+    Parameters
+    ----------
+    gray: numpy.ndarray
+        Grayscale image to filter walls from.
+
+    Returns
+    -------
+    numpy.ndarray
+        Image of walls.
     """
-    Filter walls
-    Filter out walls from a grayscale image
-    @Param image
-    @Return image of walls
-    """
-    ret, thresh = cv2.threshold(gray,0,255,cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)
+    ret, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
 
     # noise removal
-    kernel = np.ones((3,3),np.uint8)
-    opening = cv2.morphologyEx(thresh,cv2.MORPH_OPEN,kernel, iterations = 2)
+    kernel = np.ones((3, 3), np.uint8)
+    opening = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel, iterations=2)
 
-    sure_bg = cv2.dilate(opening,kernel,iterations=3)
+    sure_bg = cv2.dilate(opening, kernel, iterations=3)
 
-    dist_transform = cv2.distanceTransform(opening,cv2.DIST_L2,5)
-    ret, sure_fg = cv2.threshold(0.5*dist_transform,0.2*dist_transform.max(),255,0)
+    dist_transform = cv2.distanceTransform(opening, cv2.DIST_L2, 5)
+    ret, sure_fg = cv2.threshold(0.5 * dist_transform, 0.2 * dist_transform.max(), 255, 0)
 
     sure_fg = np.uint8(sure_fg)
-    unknown = cv2.subtract(sure_bg,sure_fg)
+    walls_image = cv2.subtract(sure_bg, sure_fg)
 
-    return unknown
+    return walls_image
 
 
-def detectPreciseBoxes(detect_img, output_img = None, color = [100,100,0]):
-    """
-    Detect corners with boxes in image with high precision
-    @Param detect_img image to detect from @mandatory
-    @Param output_img image for output
-    @Param color to set on output
-    @Return corners(list of boxes), output image
-    @source https://stackoverflow.com/questions/50930033/drawing-lines-and-distance-to-them-on-image-opencv-python
+def detect_precise_boxes(detect_img: np.ndarray, output_img: np.ndarray = None,
+                         color: tuple[int, int, int] = (100, 100, 0)) -> tuple[list[np.ndarray], np.ndarray]:
+    """Detect corners with boxes in image with high precision.
+
+    Parameters
+    ----------
+    detect_img: numpy.ndarray
+        Image to detect from.
+    output_img: numpy.ndarray
+        Image for output.
+    color: tuple[int, int, int]
+        Color to set on output.
+
+    Returns
+    -------
+    tuple[list[numpy.ndarray], numpy.ndarray]
+        Corners (list of boxes), output image.
+
+    Source
+    ------
+    https://stackoverflow.com/questions/50930033/drawing-lines-and-distance-to-them-on-image-opencv-python
     """
     res = []
 
-    contours, hierarchy = cv2.findContours(detect_img,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
-    #area = sorted(contours, key=cv2.contourArea, reverse=True)
+    contours, hierarchy = cv2.findContours(detect_img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
     largest_contour_area = 0
     for cnt in contours:
-        largest_contour_area = cv2.contourArea(cnt)
-        largest_contour = cnt
+        epsilon = 0.001 * cv2.arcLength(cnt, closed=True)
+        approx = cv2.approxPolyDP(cnt, epsilon, closed=True)
 
-        epsilon = 0.001*cv2.arcLength(largest_contour,True)
-        approx = cv2.approxPolyDP(largest_contour,epsilon,True)
         if output_img is not None:
             final = cv2.drawContours(output_img, [approx], 0, color)
+
         res.append(approx)
 
     return res, output_img
+
 
 def remove_noise(img, noise_removal_threshold):
     """
@@ -82,6 +97,7 @@ def remove_noise(img, noise_removal_threshold):
         if area > noise_removal_threshold:
             cv2.fillPoly(mask, [contour], 255)
     return mask
+
 
 def find_corners_and_draw_lines(img, corners_threshold, room_closing_max_length):
     """
@@ -116,7 +132,6 @@ def find_corners_and_draw_lines(img, corners_threshold, room_closing_max_length)
                 color = 0
                 cv2.line(img, (x, y1[0]), (x, y2[0]), color, 1)
     return img
-
 
 
 def mark_outside_black(img, mask):
@@ -208,29 +223,41 @@ def detectAndRemovePreciseBoxes(detect_img, output_img = None, color = [255, 255
 
     return res, output_img
 
-def detectOuterContours(detect_img, output_img = None, color = [255, 255, 255]):
-    """
-    Get the outer side of floorplan, used to get ground
-    @Param detect_img image to detect from @mandatory
-    @Param output_img image for output
-    @Param color to set on output
-    @Return approx, box
-    @Source https://stackoverflow.com/questions/50930033/drawing-lines-and-distance-to-them-on-image-opencv-python
+
+def detect_outer_contours(detect_img: np.ndarray, output_img: np.ndarray = None, color=(255, 255, 255)):
+    """Get the outer side of floorplan, used to get ground.
+
+    Parameters
+    ----------
+    detect_img: numpy.ndarray
+        Image to detect from.
+
+    output_img: numpy.ndarray
+        Image for output.
+    color: Iterable[int]
+        Iterable of 3 integer values in range from 0 to 255 to set RGB color on output.
+
+    Returns
+    -------
+    Tuple[List[numpy.ndarray], numpy.ndarray]
+        An approximation of outer contour, output image if provided.
+
+    Source
+    ------
+    https://stackoverflow.com/questions/50930033/drawing-lines-and-distance-to-them-on-image-opencv-python
     """
     ret, thresh = cv2.threshold(detect_img, 230, 255, cv2.THRESH_BINARY_INV)
 
     contours, hierarchy = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-    largest_contour_area = 0
-    for cnt in contours:
-        if (cv2.contourArea(cnt) > largest_contour_area):
-            largest_contour_area = cv2.contourArea(cnt)
-            largest_contour = cnt
+    contours.sort(key=cv2.contourArea, reverse=True)
 
-    epsilon = 0.001*cv2.arcLength(largest_contour,True)
-    approx = cv2.approxPolyDP(largest_contour,epsilon,True)
+    epsilon = 0.001 * cv2.arcLength(contours[0], closed=True)
+    approx = cv2.approxPolyDP(contours[0], epsilon, closed=True)
+
     if output_img is not None:
         final = cv2.drawContours(output_img, [approx], 0, color)
+
     return approx, output_img
 
 
